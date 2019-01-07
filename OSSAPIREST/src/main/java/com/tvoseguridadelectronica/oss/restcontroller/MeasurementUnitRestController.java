@@ -47,7 +47,6 @@ public class MeasurementUnitRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<MeasurementUnit> deleteMeasurementUnit(@PathVariable("id") final int id) {
         measurementUnitJpaRepository.deleteById(id);
-
         return new ResponseEntity<MeasurementUnit>(HttpStatus.NO_CONTENT);
     }
 }
