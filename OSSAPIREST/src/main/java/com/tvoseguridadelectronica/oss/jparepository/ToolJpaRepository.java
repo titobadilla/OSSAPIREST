@@ -1,4 +1,7 @@
 package com.tvoseguridadelectronica.oss.jparepository;
 
-public class ToolJpaRepository {
+import com.tvoseguridadelectronica.oss.domain.Tool;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ToolJpaRepository extends JpaRepository<Tool,Integer> {
 }

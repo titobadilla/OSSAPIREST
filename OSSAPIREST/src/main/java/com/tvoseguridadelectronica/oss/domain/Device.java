@@ -1,4 +1,10 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-public class Device {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "")
+public class Device implements Serializable {
 }
