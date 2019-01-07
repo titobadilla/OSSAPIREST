@@ -1,4 +1,4 @@
 package com.tvoseguridadelectronica.oss.repository;
 
-public class ñ {
+public class InventoryCategoryDao {
 }
