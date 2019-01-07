@@ -55,10 +55,10 @@ public class Device implements Serializable {
         this.description = description;
         this.quantity = quantity;
         this.manufactureModel = manufactureModel;
-        this.model = model;
-        this.inventoryCategory = inventoryCategory;
-        this.measurementUnit = measurementUnit;
-        this.deviceState = deviceState;
+        this.model = new Model();
+        this.inventoryCategory = new InventoryCategory();
+        this.measurementUnit = new MeasurementUnit();
+        this.deviceState = new DeviceState();
     }
 
     public Device() {
