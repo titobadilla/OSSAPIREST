@@ -45,9 +45,9 @@ public class Material implements Serializable {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
-        this.model = model;
-        this.inventoryCategory = inventoryCategory;
-        this.measurementUnit = measurementUnit;
+        this.model = new Model();
+        this.inventoryCategory = new InventoryCategory();
+        this.measurementUnit = new MeasurementUnit();
     }
 
     public int getId() {
