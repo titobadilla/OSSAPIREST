@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.tvoseguridadelectronica.oss.domain.Employee;
 import com.tvoseguridadelectronica.oss.domain.GroupClient;
-import com.tvoseguridadelectronica.oss.jparepository.ClientJpaRepository;
 import com.tvoseguridadelectronica.oss.jparepository.GroupClientJpaRepository;
 
 @RestController
