@@ -5,19 +5,23 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+@Entity
+@Table(name = "Client")
 public class Client {
 	
 	@Id
 	@Column(name = "id")
-	private int id;
+	private String id;
 	
 	@Column(name = "name")
 	private String name;
@@ -55,7 +59,7 @@ public class Client {
 		this.workOrders=new ArrayList<>();
 	}
 
-	public Client(int id, String name, String contactName, List<Telephone> telephones,
+	public Client(String id, String name, String contactName, List<Telephone> telephones,
 			AddressDescription addressDescription, GroupClient group, List<WorkOrder> workOrders) {
 		this.id = id;
 		this.name = name;
@@ -67,11 +71,11 @@ public class Client {
 	}
 	
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
