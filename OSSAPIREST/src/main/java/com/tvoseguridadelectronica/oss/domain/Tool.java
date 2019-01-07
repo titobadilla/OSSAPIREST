@@ -40,8 +40,8 @@ public class Tool implements Serializable {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
-        this.measurementUnit = measurementUnit;
-        this.inventoryCategory = inventoryCategory;
+        this.measurementUnit = new MeasurementUnit();
+        this.inventoryCategory = new InventoryCategory();
     }
 
     public int getId() {

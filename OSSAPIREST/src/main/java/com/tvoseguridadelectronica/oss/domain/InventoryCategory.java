@@ -16,6 +16,9 @@ public class InventoryCategory implements Serializable {
     @Column(name = "name")
     private String name;
 
+    public InventoryCategory() {
+    }
+
     public InventoryCategory(String name) {
         this.name = name;
     }
