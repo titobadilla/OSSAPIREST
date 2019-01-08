@@ -46,28 +46,28 @@ public class Client {
 	@JsonManagedReference
 	private GroupClient group;
 	
-	@OneToMany(
+	/*@OneToMany(
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
-	    )
-	private List<WorkOrder> workOrders;
+	    )*/
+	//private List<WorkOrder> workOrders;
 
 	public Client() {
 		this.telephones = new ArrayList<>();
 		this.addressDescription = new AddressDescription();
 		this.group = new GroupClient();
-		this.workOrders=new ArrayList<>();
+		//this.workOrders=new ArrayList<>();
 	}
 
 	public Client(String id, String name, String contactName, List<Telephone> telephones,
-			AddressDescription addressDescription, GroupClient group, List<WorkOrder> workOrders) {
+			AddressDescription addressDescription, GroupClient group/*, List<WorkOrder> workOrders*/) {
 		this.id = id;
 		this.name = name;
 		this.contactName = contactName;
 		this.telephones = telephones;
 		this.addressDescription = addressDescription;
 		this.group = group;
-		this.workOrders = workOrders;
+		//this.workOrders = workOrders;
 	}
 	
 
@@ -119,20 +119,14 @@ public class Client {
 		this.group = group;
 	}
 
-	public List<WorkOrder> getWorkOrders() {
+/*	public List<WorkOrder> getWorkOrders() {
 		return workOrders;
 	}
 
 	public void setWorkOrders(List<WorkOrder> workOrders) {
 		this.workOrders = workOrders;
-	}
+	}*/
 
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", contactName=" + contactName + ", telephones=" + telephones
-				+ ", addressDescription=" + addressDescription + ", group=" + group + ", workOrders=" + workOrders
-				+ "]";
-	}
 
 
 	
