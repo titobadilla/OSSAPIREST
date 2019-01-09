@@ -3,12 +3,14 @@ package com.tvoseguridadelectronica.oss.restcontroller;
 import com.tvoseguridadelectronica.oss.domain.Device;
 import com.tvoseguridadelectronica.oss.domain.Device;
 import com.tvoseguridadelectronica.oss.jparepository.DeviceJpaRepository;
+import com.tvoseguridadelectronica.oss.repository.DeviceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -17,6 +19,9 @@ public class DeviceRestController {
 
     @Autowired
     private DeviceJpaRepository deviceJpaRepository;
+
+    @Autowired
+    private DeviceDao deviceDao;
 
     @GetMapping("/")
     public ResponseEntity<List<Device>> listAllDevice() {
@@ -30,10 +35,45 @@ public class DeviceRestController {
         return new ResponseEntity<Device>(device, HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Device> editDevice(@RequestBody final Device device) {
-        deviceJpaRepository.saveAndFlush(device);
-        return new ResponseEntity<Device>(device, HttpStatus.OK);
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Device> editDevice(@PathVariable("id") final Integer id,@RequestBody final Device device) {
+
+      Device device2 = deviceJpaRepository.findById(id).get();
+
+      device2.setSerialNumber(device.getSerialNumber());
+      device2.setName(device.getName());
+      device2.setDescription(device.getDescription());
+      device2.setQuantity(device.getQuantity());
+      device2.setManufactureModel(device.getManufactureModel());
+      device2.setModel(device.getModel());
+      device2.setInventoryCategory(device.getInventoryCategory());
+      device2.setMeasurementUnit(device.getMeasurementUnit());
+      device2.setDeviceState(device.getDeviceState());
+
+        deviceJpaRepository.saveAndFlush(device2);
+        return new ResponseEntity<Device>(device2, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "updateQuantity/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Device> editDeviceQuantity(@PathVariable("id") final Integer id,@RequestBody final Device device) {
+        Device device2= null;
+        try {
+            device2 = deviceJpaRepository.findById(id).get();
+
+            device2.setSerialNumber(device.getSerialNumber());
+            device2.setName(device.getName());
+            device2.setDescription(device.getDescription());
+            device2.setQuantity(device.getQuantity());
+            device2.setManufactureModel(device.getManufactureModel());
+            device2.setModel(device.getModel());
+            device2.setInventoryCategory(device.getInventoryCategory());
+            device2.setMeasurementUnit(device.getMeasurementUnit());
+            device2.setDeviceState(device.getDeviceState());
+            deviceDao.updateDevice(device2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<Device>(device2, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
