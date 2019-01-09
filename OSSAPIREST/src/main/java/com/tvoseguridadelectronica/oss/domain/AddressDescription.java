@@ -17,24 +17,18 @@ public class AddressDescription implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "client_id")
-    @JsonManagedReference
-    private Client client;
-
+  
     @ManyToOne
     @JoinColumn(name = "address_id")
     @JsonManagedReference
     private Address address;
 
-    public AddressDescription(String description, Client client, Address address) {
+    public AddressDescription(String description, Address address) {
         this.description = description;
-        this.client = client;
         this.address = address;
     }
 
     public AddressDescription() {
-    	this.client=new Client();
     	this.address=new Address();
     }
 
@@ -54,15 +48,7 @@ public class AddressDescription implements Serializable {
         this.description = description;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Address getAddress() {
+     public Address getAddress() {
         return address;
     }
 
@@ -74,8 +60,7 @@ public class AddressDescription implements Serializable {
     public String toString() {
         return "AddressDescription{" +
                 "id:" + id +
-                ", description:'" + description + '\'' +
-                ", client:" + client +
+                ", description:'" + description +
                 ", address:" + address +
                 '}';
     }

@@ -36,10 +36,12 @@ public class Client {
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
 	    )
+	@JsonManagedReference
 	private List<Telephone> telephones;
 	
 	@OneToOne
 	@JoinColumn(name="address_description_id")
+	@JsonManagedReference
 	private AddressDescription addressDescription;
 	
 	@ManyToOne
