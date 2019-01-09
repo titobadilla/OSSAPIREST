@@ -29,6 +29,9 @@ public class Client {
 	@Column(name = "contact_name")
 	private String contactName;
 	
+	@Column(name = "contact_last_name")
+	private String contactLastName;
+	
 	@OneToMany(
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
@@ -60,13 +63,14 @@ public class Client {
 	}
 
 	public Client(String id, String name, String contactName, List<Telephone> telephones,
-			AddressDescription addressDescription, GroupClient group/*, List<WorkOrder> workOrders*/) {
+			AddressDescription addressDescription, GroupClient group/*, List<WorkOrder> workOrders*/,String contactLastName) {
 		this.id = id;
 		this.name = name;
 		this.contactName = contactName;
 		this.telephones = telephones;
 		this.addressDescription = addressDescription;
 		this.group = group;
+		this.contactLastName=contactLastName;
 		//this.workOrders = workOrders;
 	}
 	
@@ -118,6 +122,15 @@ public class Client {
 	public void setGroup(GroupClient group) {
 		this.group = group;
 	}
+
+	public String getContactLastName() {
+		return contactLastName;
+	}
+
+	public void setContactLastName(String contactLastName) {
+		this.contactLastName = contactLastName;
+	}
+	
 
 /*	public List<WorkOrder> getWorkOrders() {
 		return workOrders;
