@@ -38,10 +38,8 @@ public class Client {
 	    )
 	private List<Telephone> telephones;
 	
-	@OneToOne(
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )
+	@OneToOne
+	@JoinColumn(name="address_description_id")
 	private AddressDescription addressDescription;
 	
 	@ManyToOne

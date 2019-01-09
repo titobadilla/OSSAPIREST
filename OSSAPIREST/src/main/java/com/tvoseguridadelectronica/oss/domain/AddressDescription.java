@@ -34,6 +34,8 @@ public class AddressDescription implements Serializable {
     }
 
     public AddressDescription() {
+    	this.client=new Client();
+    	this.address=new Address();
     }
 
     public int getId() {
