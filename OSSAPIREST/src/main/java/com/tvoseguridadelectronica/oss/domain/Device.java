@@ -23,7 +23,7 @@ public class Device implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", updatable= false)
     private int quantity;
 
     @Column(name = "manufacture_model")

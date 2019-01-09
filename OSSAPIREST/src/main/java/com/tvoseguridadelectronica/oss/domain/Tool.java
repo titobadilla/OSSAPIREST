@@ -17,7 +17,7 @@ public class Tool implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", updatable= false)
     private int quantity;
 
     @Column(name = "description")
