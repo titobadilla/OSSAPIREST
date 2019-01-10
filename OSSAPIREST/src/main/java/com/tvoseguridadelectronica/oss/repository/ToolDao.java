@@ -24,14 +24,14 @@ public class ToolDao {
         this.simpleJdbcCall=new SimpleJdbcCall(dataSource);
     }
 
-    public Tool updateTool(Tool tool) throws SQLException {
+    public void updateTool(Tool tool) throws SQLException {
 
         SqlParameterSource parameterSource= new MapSqlParameterSource()
-                .addValue("quantity", tool.getQuantity());
+                .addValue("quantity", tool.getQuantity())
+                .addValue("id",tool.getId());
 
-        simpleJdbcCall.setProcedureName("Oss_Tool_Update_Quantity");
+        simpleJdbcCall.setProcedureName("OSS_Tool_Update_Quantity");
         Map<String, Object> outParameters= simpleJdbcCall.execute(parameterSource);
 
-        return tool;
     }
 }

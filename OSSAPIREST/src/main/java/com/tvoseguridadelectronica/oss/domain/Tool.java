@@ -25,12 +25,10 @@ public class Tool implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "measurement_unit_id")
-    @JsonManagedReference
     private MeasurementUnit measurementUnit;
 
     @ManyToOne
     @JoinColumn(name = "inventory_category_id")
-    @JsonManagedReference
     private InventoryCategory inventoryCategory;
 
     public Tool() {

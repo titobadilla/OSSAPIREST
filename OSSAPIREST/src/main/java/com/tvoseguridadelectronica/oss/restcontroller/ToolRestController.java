@@ -33,20 +33,34 @@ public class ToolRestController {
         return new ResponseEntity<Tool>(tool, HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tool> editTool(@RequestBody final Tool tool) {
-        toolJpaRepository.saveAndFlush(tool);
-        return new ResponseEntity<Tool>(tool, HttpStatus.OK);
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Tool> editTool(@PathVariable("id") final Integer id,@RequestBody final Tool tool) {
+
+        Tool tool2 = toolJpaRepository.findById(id).get();
+
+        tool2.setName(tool.getName());
+        tool2.setDescription(tool.getDescription());
+        tool2.setInventoryCategory(tool.getInventoryCategory());
+        tool2.setMeasurementUnit(tool.getMeasurementUnit());
+
+        toolJpaRepository.saveAndFlush(tool2);
+        return new ResponseEntity<Tool>(tool2, HttpStatus.OK);
     }
 
-    @PutMapping(value = "updateQuantity/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tool> editQuantityTool(@RequestBody Tool tool) {
+    @PutMapping(value = "updateQuantity/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Tool> editQuantityTool(@PathVariable("id") final Integer id,@RequestBody Tool tool) {
+        Tool tool2=null;
         try {
-            tool = toolDao.updateTool(tool);
+
+            tool2 = toolJpaRepository.findById(id).get();
+
+            tool2.setQuantity(tool.getQuantity());
+
+            toolDao.updateTool(tool2);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<Tool>(tool, HttpStatus.OK);
+        return new ResponseEntity<Tool>(tool2, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
