@@ -18,7 +18,6 @@ public class Model {
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    @JsonManagedReference
     private Brand brand;
 
     public Model() {

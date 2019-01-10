@@ -20,7 +20,6 @@ public class AddressDescription implements Serializable {
   
     @ManyToOne
     @JoinColumn(name = "address_id")
-    @JsonManagedReference
     private Address address;
 
     public AddressDescription(String description, Address address) {
