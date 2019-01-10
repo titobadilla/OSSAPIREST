@@ -38,12 +38,12 @@ public class Telephone implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="client_id")
-	@JsonBackReference
+	@JsonBackReference(value="client-json")
 	private Client client;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="employee_id")
-	@JsonBackReference
+	@JsonBackReference(value="employee-json")
 	private Employee employee;
 
 	public Telephone() {

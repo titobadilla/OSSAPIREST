@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -41,6 +42,7 @@ public class Employee implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_role_id")
+	@JsonIgnore
 	private EmployeeRole role;
 	
 	@Column(name="username")
@@ -50,7 +52,7 @@ public class Employee implements Serializable{
 	private String password;
 	
 	@OneToMany(mappedBy="employee")
-	@JsonManagedReference
+	@JsonManagedReference(value="employee-json")
 	private List<Telephone> telephones;
 
 	public Employee() {

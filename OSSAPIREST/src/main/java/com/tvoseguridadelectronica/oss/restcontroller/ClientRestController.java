@@ -31,7 +31,6 @@ public class ClientRestController {
 	public ResponseEntity<List<Client>> listAllClients() {
 
 		List<Client> clients=new ArrayList<>();
-		List<Client> clients2=new ArrayList<>(); 
 		try {
 			clients= clientJpaRepository.findAll();		
 			

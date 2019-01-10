@@ -41,11 +41,12 @@ public class Client implements Serializable{
 	private String contactLastName;
 
 	@OneToMany(mappedBy="client")
-	@JsonManagedReference
+	@JsonManagedReference(value="client-json")
 	private List<Telephone> telephones;
 	
 	@OneToOne
-	@JoinColumn(name="address_description_id")	
+	@JoinColumn(name="address_description_id")
+	@JsonIgnore
 	private AddressDescription addressDescription;
 	
 	@ManyToOne
@@ -139,7 +140,7 @@ public class Client implements Serializable{
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", name=" + name + ", contactName=" + contactName + ", contactLastName="
-				+ contactLastName + ", telephones=" + telephones + ", addressDescription=" + addressDescription
+				+ contactLastName + ", telephones=" +/* telephones + */", addressDescription=" + addressDescription
 				+ ", group=" + group + "]";
 	}
 
