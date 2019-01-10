@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -38,9 +39,9 @@ public class Client implements Serializable{
 	
 	@Column(name = "contact_last_name")
 	private String contactLastName;
-	
+
 	@OneToMany(mappedBy="client")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<Telephone> telephones;
 	
 	@OneToOne
@@ -49,6 +50,7 @@ public class Client implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "group_client_id")
+	@JsonBackReference
 	private GroupClient group;
 	
 	/*@OneToMany(
@@ -101,6 +103,7 @@ public class Client implements Serializable{
 		this.contactName = contactName;
 	}
 
+	
 	public List<Telephone> getTelephones() {
 		return telephones;
 	}
@@ -108,7 +111,7 @@ public class Client implements Serializable{
 	public void setTelephones(List<Telephone> telephones) {
 		this.telephones = telephones;
 	}
-
+	
 	public AddressDescription getAddressDescription() {
 		return addressDescription;
 	}
@@ -136,9 +139,11 @@ public class Client implements Serializable{
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", name=" + name + ", contactName=" + contactName + ", contactLastName="
-				+ contactLastName +  ", addressDescription=" + addressDescription
+				+ contactLastName + ", telephones=" + telephones + ", addressDescription=" + addressDescription
 				+ ", group=" + group + "]";
 	}
+
+	
 	
 
 /*	public List<WorkOrder> getWorkOrders() {

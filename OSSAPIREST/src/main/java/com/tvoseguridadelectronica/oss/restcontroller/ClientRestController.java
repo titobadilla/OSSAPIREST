@@ -33,10 +33,7 @@ public class ClientRestController {
 		List<Client> clients=new ArrayList<>();
 		List<Client> clients2=new ArrayList<>(); 
 		try {
-			clients= clientJpaRepository.findAll();
-			int size=clients.size();
-			System.out.println(size);
-		
+			clients= clientJpaRepository.findAll();		
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -75,7 +72,16 @@ public class ClientRestController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Client> deleteClient(@PathVariable("id") final String id) {
-		clientJpaRepository.deleteById(id);
+		
+		try {
+			clientJpaRepository.deleteById(id);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Error de borrado, por llave foranea");
+			
+		}
+		
 
 		return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
 	}

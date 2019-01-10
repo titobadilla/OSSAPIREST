@@ -12,7 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Group_client")
@@ -32,6 +33,7 @@ public class GroupClient implements Serializable{
 	private String idHeadClient;
 	
 	@OneToMany(mappedBy = "group")
+	@JsonManagedReference
 	private List<Client> clients;
 
 	public GroupClient() {
@@ -70,7 +72,7 @@ public class GroupClient implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GroupClient [idGroup=" + idGroup + ", idHeadClient=" + idHeadClient + ", clients=" + clients + "]";
+		return "GroupClient [idGroup=" + idGroup + ", idHeadClient=" + idHeadClient  /*", clients=" + clients */+ "]";
 	}
 	
 	

@@ -2,8 +2,10 @@ package com.tvoseguridadelectronica.oss.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,22 +36,31 @@ public class Telephone implements Serializable {
 	@Column(name = "number")
 	private String number;
 	
-	@ManyToOne//(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="client_id")
-	@JsonIgnore
+	@JsonBackReference
 	private Client client;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="employee_id")
+	@JsonBackReference
+	private Employee employee;
 
 	public Telephone() {
-		this.client=new Client();		
+		this.client=new Client();	
+		this.employee=new Employee();
 	}
 
 	
-	public Telephone(int id, String type, String number, Client client) {
+	
+	public Telephone(int id, String type, String number, Client client, Employee employee) {
 		this.id = id;
 		this.type = type;
 		this.number = number;
 		this.client = client;
+		this.employee = employee;
 	}
+
 
 	public int getId() {
 		return id;
@@ -82,12 +93,28 @@ public class Telephone implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
 
 
 	@Override
 	public String toString() {
-		return "Telephone [id=" + id + ", type=" + type + ", number=" + number + "]";
+		return "Telephone [id=" + id + ", type=" + type + ", number=" + number + ", client=" + client + ", employee="
+				+ employee + "]";
 	}
+
+
+
+	
 
 	
 	

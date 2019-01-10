@@ -48,15 +48,14 @@ public class Employee implements Serializable{
 	
 	@Column(name="password")
 	private String password;
-	/*@OneToMany(
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )*/
-	//private List<Telephone> telephones;
+	
+	@OneToMany(mappedBy="employee")
+	@JsonManagedReference
+	private List<Telephone> telephones;
 
 	public Employee() {
 		this.role=new EmployeeRole();
-		//this.telephones=new ArrayList<>();
+		this.telephones=new ArrayList<>();
 	}
 
 	
@@ -126,6 +125,22 @@ public class Employee implements Serializable{
 
 	public void setRole(EmployeeRole role) {
 		this.role = role;
+	}
+
+	public List<Telephone> getTelephones() {
+		return telephones;
+	}
+
+	public void setTelephones(List<Telephone> telephones) {
+		this.telephones = telephones;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", lastName=" + lastName + ", position=" + position + ", role="
+				+ role + ", username=" + username + ", password=" + password + ", telephones=" + telephones + "]";
 	}
 
 	
