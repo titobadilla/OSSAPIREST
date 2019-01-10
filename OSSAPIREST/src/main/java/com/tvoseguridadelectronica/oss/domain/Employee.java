@@ -42,7 +42,6 @@ public class Employee implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_role_id")
-	@JsonIgnore
 	private EmployeeRole role;
 	
 	@Column(name="username")
@@ -52,8 +51,8 @@ public class Employee implements Serializable{
 	private String password;
 	
 	@OneToMany(mappedBy="employee")
-	@JsonManagedReference(value="employee-json")
-	private List<Telephone> telephones;
+	@JsonManagedReference
+	private List<TelephoneEmployee> telephones;
 
 	public Employee() {
 		this.role=new EmployeeRole();
@@ -129,11 +128,11 @@ public class Employee implements Serializable{
 		this.role = role;
 	}
 
-	public List<Telephone> getTelephones() {
+	public List<TelephoneEmployee> getTelephones() {
 		return telephones;
 	}
 
-	public void setTelephones(List<Telephone> telephones) {
+	public void setTelephones(List<TelephoneEmployee> telephones) {
 		this.telephones = telephones;
 	}
 

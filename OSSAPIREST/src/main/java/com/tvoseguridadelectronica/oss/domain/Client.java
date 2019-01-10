@@ -41,12 +41,12 @@ public class Client implements Serializable{
 	private String contactLastName;
 
 	@OneToMany(mappedBy="client")
-	@JsonManagedReference(value="client-json")
-	private List<Telephone> telephones;
+	@JsonManagedReference
+	private List<TelephoneClient> telephones;
 	
 	@OneToOne
 	@JoinColumn(name="address_description_id")
-	@JsonIgnore
+	//@JsonManagedReference
 	private AddressDescription addressDescription;
 	
 	@ManyToOne
@@ -67,7 +67,7 @@ public class Client implements Serializable{
 		//this.workOrders=new ArrayList<>();
 	}
 
-	public Client(String id, String name, String contactName, List<Telephone> telephones,
+	public Client(String id, String name, String contactName, List<TelephoneClient> telephones,
 			AddressDescription addressDescription, GroupClient group/*, List<WorkOrder> workOrders*/,String contactLastName) {
 		this.id = id;
 		this.name = name;
@@ -105,11 +105,11 @@ public class Client implements Serializable{
 	}
 
 	
-	public List<Telephone> getTelephones() {
+	public List<TelephoneClient> getTelephones() {
 		return telephones;
 	}
 
-	public void setTelephones(List<Telephone> telephones) {
+	public void setTelephones(List<TelephoneClient> telephones) {
 		this.telephones = telephones;
 	}
 	
@@ -140,9 +140,10 @@ public class Client implements Serializable{
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", name=" + name + ", contactName=" + contactName + ", contactLastName="
-				+ contactLastName + ", telephones=" +/* telephones + */", addressDescription=" + addressDescription
+				+ contactLastName + ", telephones=" + telephones + ", addressDescription=" + addressDescription
 				+ ", group=" + group + "]";
 	}
+
 
 	
 	

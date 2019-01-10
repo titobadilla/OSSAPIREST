@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class AddressDescription implements Serializable {
   
     @ManyToOne
     @JoinColumn(name = "address_id")
-    //@JsonManagedReference
+    @JsonIgnore
     private Address address;
 
     public AddressDescription(String description, Address address) {
@@ -34,7 +35,7 @@ public class AddressDescription implements Serializable {
     }
 
     public AddressDescription() {
-    	//this.address=new Address();
+    	this.address=new Address();
     }
 
     public int getId() {
