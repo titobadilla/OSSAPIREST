@@ -1,5 +1,7 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,11 @@ public class Model {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    @JsonManagedReference
+    private Brand brand;
 
     public Model() {
     }
