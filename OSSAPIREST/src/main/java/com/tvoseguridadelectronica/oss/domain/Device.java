@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Device implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -23,7 +23,7 @@ public class Device implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", updatable= false)
     private int quantity;
 
     @Column(name = "manufacture_model")
@@ -31,22 +31,18 @@ public class Device implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    @JsonManagedReference
     private Model model;
 
     @ManyToOne
     @JoinColumn(name = "inventory_category_id")
-    @JsonManagedReference
     private InventoryCategory inventoryCategory;
 
     @ManyToOne
     @JoinColumn(name = "measurement_unit_id")
-    @JsonManagedReference
     private MeasurementUnit measurementUnit;
 
     @ManyToOne
     @JoinColumn(name = "device_state_id")
-    @JsonManagedReference
     private DeviceState deviceState;
 
     public Device(String serialNumber, String name, String description, int quantity, String manufactureModel, Model model, InventoryCategory inventoryCategory, MeasurementUnit measurementUnit, DeviceState deviceState) {

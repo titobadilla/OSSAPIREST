@@ -10,14 +10,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Tool implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", updatable= false)
     private int quantity;
 
     @Column(name = "description")
@@ -25,12 +25,10 @@ public class Tool implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "measurement_unit_id")
-    @JsonManagedReference
     private MeasurementUnit measurementUnit;
 
     @ManyToOne
     @JoinColumn(name = "inventory_category_id")
-    @JsonManagedReference
     private InventoryCategory inventoryCategory;
 
     public Tool() {
