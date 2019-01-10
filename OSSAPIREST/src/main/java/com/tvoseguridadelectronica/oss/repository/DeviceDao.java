@@ -24,7 +24,7 @@ public class DeviceDao {
         this.simpleJdbcCall=new SimpleJdbcCall(dataSource);
     }
 
-    public Device updateDevice(Device device) throws SQLException {
+    public void updateDevice(Device device) throws SQLException {
 
         SqlParameterSource parameterSource= new MapSqlParameterSource()
                 .addValue("quantity", device.getQuantity())
@@ -33,7 +33,6 @@ public class DeviceDao {
         simpleJdbcCall.setProcedureName("OSS_Device_Update_Quantity");
         Map<String, Object> outParameters= simpleJdbcCall.execute(parameterSource);
 
-        return device;
     }
 
 }

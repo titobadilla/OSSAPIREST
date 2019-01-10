@@ -25,17 +25,14 @@ public class Material implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    @JsonManagedReference
     private Model model;
 
     @ManyToOne
     @JoinColumn(name = "inventory_category_id")
-    @JsonManagedReference
     private InventoryCategory inventoryCategory;
 
     @ManyToOne
     @JoinColumn(name = "measurement_unit_id")
-    @JsonManagedReference
     private MeasurementUnit measurementUnit;
 
     public Material() {

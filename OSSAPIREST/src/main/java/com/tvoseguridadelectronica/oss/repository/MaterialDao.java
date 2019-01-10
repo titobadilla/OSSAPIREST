@@ -24,14 +24,14 @@ public class MaterialDao {
         this.simpleJdbcCall=new SimpleJdbcCall(dataSource);
     }
 
-    public Material updateMaterial(Material material) throws SQLException {
+    public void updateMaterial(Material material) throws SQLException {
 
         SqlParameterSource parameterSource= new MapSqlParameterSource()
-                .addValue("quantity", material.getQuantity());
+                .addValue("quantity", material.getQuantity())
+                .addValue("id",material.getId());
 
-        simpleJdbcCall.setProcedureName("Oss_Material_Update_Quantity");
+        simpleJdbcCall.setProcedureName("OSS_Material_Update_Quantity");
         Map<String, Object> outParameters= simpleJdbcCall.execute(parameterSource);
 
-        return material;
     }
 }

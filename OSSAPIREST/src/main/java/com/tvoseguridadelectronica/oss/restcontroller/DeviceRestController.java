@@ -43,7 +43,6 @@ public class DeviceRestController {
       device2.setSerialNumber(device.getSerialNumber());
       device2.setName(device.getName());
       device2.setDescription(device.getDescription());
-      device2.setQuantity(device.getQuantity());
       device2.setManufactureModel(device.getManufactureModel());
       device2.setModel(device.getModel());
       device2.setInventoryCategory(device.getInventoryCategory());
@@ -60,16 +59,10 @@ public class DeviceRestController {
         try {
             device2 = deviceJpaRepository.findById(id).get();
 
-            device2.setSerialNumber(device.getSerialNumber());
-            device2.setName(device.getName());
-            device2.setDescription(device.getDescription());
             device2.setQuantity(device.getQuantity());
-            device2.setManufactureModel(device.getManufactureModel());
-            device2.setModel(device.getModel());
-            device2.setInventoryCategory(device.getInventoryCategory());
-            device2.setMeasurementUnit(device.getMeasurementUnit());
-            device2.setDeviceState(device.getDeviceState());
+
             deviceDao.updateDevice(device2);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
