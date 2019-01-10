@@ -1,4 +1,11 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-public class ListWorkOrder {
+import java.io.Serializable;
+
+public class ListWorkOrder implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 }

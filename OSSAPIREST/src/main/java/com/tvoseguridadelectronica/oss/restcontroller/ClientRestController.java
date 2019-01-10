@@ -1,6 +1,9 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,19 @@ public class ClientRestController {
 	@GetMapping("/")
 	public ResponseEntity<List<Client>> listAllClients() {
 
-		List<Client> clients = clientJpaRepository.findAll();
+		List<Client> clients=new ArrayList<>();
+		List<Client> clients2=new ArrayList<>(); 
+		try {
+			clients= clientJpaRepository.findAll();
+			int size=clients.size();
+			System.out.println(size);
+		
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+		
 		return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
 
 	}

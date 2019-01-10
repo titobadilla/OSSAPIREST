@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Client")
-public class Client {
+public class Client implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "id")
 	private String id;
@@ -32,21 +39,16 @@ public class Client {
 	@Column(name = "contact_last_name")
 	private String contactLastName;
 	
-	@OneToMany(
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )
-	@JsonManagedReference
+	@OneToMany(mappedBy="client")
+	@JsonIgnore
 	private List<Telephone> telephones;
 	
 	@OneToOne
-	@JoinColumn(name="address_description_id")
-	@JsonManagedReference
+	@JoinColumn(name="address_description_id")	
 	private AddressDescription addressDescription;
 	
 	@ManyToOne
 	@JoinColumn(name = "group_client_id")
-	@JsonManagedReference
 	private GroupClient group;
 	
 	/*@OneToMany(
@@ -129,6 +131,13 @@ public class Client {
 
 	public void setContactLastName(String contactLastName) {
 		this.contactLastName = contactLastName;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", name=" + name + ", contactName=" + contactName + ", contactLastName="
+				+ contactLastName +  ", addressDescription=" + addressDescription
+				+ ", group=" + group + "]";
 	}
 	
 

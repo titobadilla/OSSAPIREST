@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Group_client")
-public class GroupClient {
+public class GroupClient implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -26,7 +32,6 @@ public class GroupClient {
 	private String idHeadClient;
 	
 	@OneToMany(mappedBy = "group")
-	@JsonBackReference
 	private List<Client> clients;
 
 	public GroupClient() {

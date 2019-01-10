@@ -9,7 +9,12 @@ import java.io.Serializable;
 @Table(name = "Address_description")
 public class AddressDescription implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
@@ -20,7 +25,7 @@ public class AddressDescription implements Serializable {
   
     @ManyToOne
     @JoinColumn(name = "address_id")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Address address;
 
     public AddressDescription(String description, Address address) {
@@ -29,7 +34,7 @@ public class AddressDescription implements Serializable {
     }
 
     public AddressDescription() {
-    	this.address=new Address();
+    	//this.address=new Address();
     }
 
     public int getId() {
