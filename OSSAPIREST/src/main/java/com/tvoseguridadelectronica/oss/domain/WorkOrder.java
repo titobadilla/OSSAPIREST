@@ -30,8 +30,8 @@ public class WorkOrder implements Serializable{
 
 	@ManyToMany(cascade=CascadeType.MERGE)
 	@JoinTable(name = "Work_order_employee", joinColumns = 
-			@JoinColumn(name = "work_order_id", referencedColumnName="work_order_id"),
-			inverseJoinColumns =  @JoinColumn(name = "employee_id",referencedColumnName="employee_id") )
+			@JoinColumn(name = "work_order_id", referencedColumnName="id"),
+			inverseJoinColumns =  @JoinColumn(name = "employee_id",referencedColumnName="id") )
 	//@JsonManagedReference
 	List<Employee> employees;
 
