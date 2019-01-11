@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Inventory_category")
-
 public class InventoryCategory implements Serializable {
 
     /**

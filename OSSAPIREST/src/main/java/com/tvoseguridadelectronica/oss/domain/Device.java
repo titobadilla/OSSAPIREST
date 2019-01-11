@@ -36,22 +36,18 @@ public class Device implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    @JsonManagedReference
     private Model model;
 
     @ManyToOne
     @JoinColumn(name = "inventory_category_id")
-    @JsonManagedReference
     private InventoryCategory inventoryCategory;
 
     @ManyToOne
     @JoinColumn(name = "measurement_unit_id")
-    @JsonManagedReference
     private MeasurementUnit measurementUnit;
 
     @ManyToOne
     @JoinColumn(name = "device_state_id")
-    @JsonManagedReference
     private DeviceState deviceState;
 
     public Device(String serialNumber, String name, String description, int quantity, String manufactureModel, Model model, InventoryCategory inventoryCategory, MeasurementUnit measurementUnit, DeviceState deviceState) {

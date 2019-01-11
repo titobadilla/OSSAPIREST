@@ -1,6 +1,10 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+<<<<<<< HEAD
 import java.io.Serializable;
+=======
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+>>>>>>> 21f8744ae3f6a7144c4d9b9e76c12757b91bb1fe
 
 import javax.persistence.*;
 
@@ -20,6 +24,10 @@ public class Model implements Serializable{
 
     @Column(name = "name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 
     public Model() {
     }

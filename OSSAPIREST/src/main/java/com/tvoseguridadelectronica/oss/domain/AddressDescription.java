@@ -26,7 +26,10 @@ public class AddressDescription implements Serializable {
   
     @ManyToOne
     @JoinColumn(name = "address_id")
+<<<<<<< HEAD
     @JsonIgnore
+=======
+>>>>>>> 21f8744ae3f6a7144c4d9b9e76c12757b91bb1fe
     private Address address;
 
     public AddressDescription(String description, Address address) {
