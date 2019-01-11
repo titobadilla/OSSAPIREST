@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Work_order")
@@ -26,9 +28,12 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "client_id")
 	Client client;
 
-	@ManyToMany
-	@JsonManagedReference
-	Employee employee;
+	@ManyToMany(cascade=CascadeType.MERGE)
+	@JoinTable(name = "Work_order_employee", joinColumns = 
+			@JoinColumn(name = "work_order_id", referencedColumnName="work_order_id"),
+			inverseJoinColumns =  @JoinColumn(name = "employee_id",referencedColumnName="employee_id") )
+	//@JsonManagedReference
+	List<Employee> employees;
 
 	@ManyToOne
 	@JoinColumn(name = "list_work_order_id")
@@ -42,16 +47,21 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "work_order_type_id")
 	WorkOrderType workOrderType;
 
-	public WorkOrder(String description, Client client, Employee employee, ListWorkOrder listWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
+	public WorkOrder(String description, Client client, List<Employee> employees, ListWorkOrder listWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
 		this.description = description;
 		this.client = client;
-		this.employee = employee;
+		this.employees = employees;
 		this.listWorkOrder = listWorkOrder;
 		this.workOrderDetail = workOrderDetail;
 		this.workOrderType = workOrderType;
 	}
 
 	public WorkOrder() {
+		this.client=new Client();
+		this.employees=new ArrayList<>();
+		this.listWorkOrder=new ListWorkOrder();
+		this.workOrderDetail=new WorkOrderDetail();
+		this.workOrderType=new WorkOrderType();
 	}
 
 	public static long getSerialVersionUID() {
@@ -82,12 +92,12 @@ public class WorkOrder implements Serializable{
 		this.client = client;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public List<Employee> getEmployees() {
+		return employees;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 	public ListWorkOrder getListWorkOrder() {
@@ -113,4 +123,13 @@ public class WorkOrder implements Serializable{
 	public void setWorkOrderType(WorkOrderType workOrderType) {
 		this.workOrderType = workOrderType;
 	}
+
+	@Override
+	public String toString() {
+		return "WorkOrder [id=" + id + ", description=" + description + ", client=" + client + ", employees="
+				+ employees + ", listWorkOrder=" + listWorkOrder + ", workOrderDetail=" + workOrderDetail
+				+ ", workOrderType=" + workOrderType + "]";
+	}
+	
+	
 }

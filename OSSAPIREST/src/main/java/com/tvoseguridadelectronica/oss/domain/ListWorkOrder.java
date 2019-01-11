@@ -46,4 +46,11 @@ public class ListWorkOrder implements Serializable {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "ListWorkOrder [id=" + id + ", name=" + name + "]";
+	}
+	
+	
+
 }
