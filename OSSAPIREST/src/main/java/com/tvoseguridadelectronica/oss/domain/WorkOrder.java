@@ -1,5 +1,7 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -28,19 +30,18 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "client_id")
 	Client client;
 
-	@ManyToMany(cascade=CascadeType.MERGE)
+	@ManyToMany
 	@JoinTable(name = "Work_order_employee", joinColumns = 
 			@JoinColumn(name = "work_order_id", referencedColumnName="id"),
 			inverseJoinColumns =  @JoinColumn(name = "employee_id",referencedColumnName="id") )
-	//@JsonManagedReference
 	List<Employee> employees;
 
 	@ManyToOne
 	@JoinColumn(name = "list_work_order_id")
 	ListWorkOrder listWorkOrder;
 
-	@OneToOne
-	@JoinColumn(name = "work_order_detail_id")
+	@OneToOne(mappedBy="workOrder")
+	@JsonBackReference
 	WorkOrderDetail workOrderDetail;
 
 	@ManyToOne
@@ -60,13 +61,9 @@ public class WorkOrder implements Serializable{
 		this.client=new Client();
 		this.employees=new ArrayList<>();
 		this.listWorkOrder=new ListWorkOrder();
-		this.workOrderDetail=new WorkOrderDetail();
 		this.workOrderType=new WorkOrderType();
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
 
 	public int getId() {
 		return id;

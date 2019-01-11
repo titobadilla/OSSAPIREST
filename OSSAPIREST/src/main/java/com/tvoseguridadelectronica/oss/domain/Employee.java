@@ -59,8 +59,6 @@ public class Employee implements Serializable{
 		this.telephones=new ArrayList<>();
 	}
 
-	
-
 	public Employee(String id, String name, String lastName, String position, EmployeeRole role, String username,
 			String password) {
 		this.id = id;

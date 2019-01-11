@@ -3,15 +3,22 @@ package com.tvoseguridadelectronica.oss.domain;
 import java.io.Serializable;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "Work_order_detail")
 public class WorkOrderDetail  implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -32,6 +39,11 @@ public class WorkOrderDetail  implements Serializable {
 
     @Column(name = "manager_name")
     private String managerName;
+    
+    @OneToOne
+	@JoinColumn(name = "work_order_id")
+	@JsonManagedReference
+    private WorkOrder workOrder;
 
     public WorkOrderDetail(Date date, String checkIn, String checkOut, String description, int invoiceId, String managerName) {
         this.date = date;
@@ -43,6 +55,7 @@ public class WorkOrderDetail  implements Serializable {
     }
 
     public WorkOrderDetail() {
+    	this.date=new Date();
     }
 
     public int getId() {
@@ -100,4 +113,21 @@ public class WorkOrderDetail  implements Serializable {
     public void setManagerName(String managerName) {
         this.managerName = managerName;
     }
+
+	public WorkOrder getWorkOrder() {
+		return workOrder;
+	}
+
+	public void setWorkOrder(WorkOrder workOrder) {
+		this.workOrder = workOrder;
+	}
+
+	@Override
+	public String toString() {
+		return "WorkOrderDetail [id=" + id + ", date=" + date + ", checkIn=" + checkIn + ", checkOut=" + checkOut
+				+ ", description=" + description + ", invoiceId=" + invoiceId + ", managerName=" + managerName
+				+ ", workOrder=" + workOrder + "]";
+	}
+
+	
 }

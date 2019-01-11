@@ -38,7 +38,7 @@ public class WorkOrderRestController {
         workOrder2.setClient(workOrder.getClient());
         workOrder2.setEmployees(workOrder.getEmployees());
         workOrder2.setListWorkOrder(workOrder.getListWorkOrder());
-        workOrder2.setWorkOrderDetail(workOrder.getWorkOrderDetail());
+        //workOrder2.setWorkOrderDetail(workOrder.getWorkOrderDetail());
         workOrder2.setWorkOrderType(workOrder.getWorkOrderType());
         
         workOrderJpaRepository.saveAndFlush(workOrder2);
