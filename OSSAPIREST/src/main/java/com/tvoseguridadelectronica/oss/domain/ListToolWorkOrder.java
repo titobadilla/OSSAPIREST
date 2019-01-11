@@ -9,46 +9,21 @@ import java.io.Serializable;
 @Table(name = "List_work_order_device")
 public class ListToolWorkOrder implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Autowired
     @EmbeddedId
-    private ListToolWorkOrder id;
-
-    @ManyToOne
-    @JoinColumn(name = "list_work_order_id")
-    private ListWorkOrder listWorkOrder;
-
-    @ManyToOne
-    @JoinColumn(name = "tool_id")
-    private Tool tool;
+    private ListToolWorkOrderId id;
 
     @Column(name = "quantity")
     private int quantity;
 
-    public ListToolWorkOrder(ListWorkOrder listWorkOrder, Tool tool, int quantity) {
-        this.listWorkOrder = listWorkOrder;
-        this.tool = tool;
+    public ListToolWorkOrder(int quantity) {
         this.quantity = quantity;
     }
 
     public ListToolWorkOrder() {
-        this.listWorkOrder = new ListWorkOrder();
-        this.tool = new Tool();
-    }
-
-    public ListWorkOrder getListWorkOrder() {
-        return listWorkOrder;
-    }
-
-    public void setListWorkOrder(ListWorkOrder listWorkOrder) {
-        this.listWorkOrder = listWorkOrder;
-    }
-
-    public Tool getTool() {
-        return tool;
-    }
-
-    public void setTool(Tool tool) {
-        this.tool = tool;
+        this.id = new ListToolWorkOrderId();
     }
 
     public int getQuantity() {

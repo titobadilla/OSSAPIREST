@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Embeddable
 public class ListToolWorkOrderId implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @ManyToOne
     private ListWorkOrder listWorkOrder;
 
