@@ -1,51 +1,49 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 
-public class ListWorkOrder implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-=======
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "List_work_order")
 public class ListWorkOrder implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	private static final long serialVersionUID = 1L;
 
-    @Column(name = "name")
-    private String name;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    public ListWorkOrder(String name) {
-        this.name = name;
-    }
+	@Column(name = "name")
+	private String name;
 
-    public ListWorkOrder() {
-    }
+	public ListWorkOrder(String name) {
+		this.name = name;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public ListWorkOrder() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
->>>>>>> 21f8744ae3f6a7144c4d9b9e76c12757b91bb1fe
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

@@ -1,15 +1,7 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 
-public class WorkOrderDetail implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-=======
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -108,5 +100,4 @@ public class WorkOrderDetail  implements Serializable {
     public void setManagerName(String managerName) {
         this.managerName = managerName;
     }
->>>>>>> 21f8744ae3f6a7144c4d9b9e76c12757b91bb1fe
 }

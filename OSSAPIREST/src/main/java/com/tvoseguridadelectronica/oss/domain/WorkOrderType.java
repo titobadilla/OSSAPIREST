@@ -1,15 +1,7 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 
-public class WorkOrderType implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-=======
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -47,5 +39,4 @@ public class WorkOrderType implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
->>>>>>> 21f8744ae3f6a7144c4d9b9e76c12757b91bb1fe
 }
