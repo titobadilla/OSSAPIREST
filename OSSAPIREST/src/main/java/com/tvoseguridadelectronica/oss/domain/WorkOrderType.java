@@ -1,5 +1,7 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 

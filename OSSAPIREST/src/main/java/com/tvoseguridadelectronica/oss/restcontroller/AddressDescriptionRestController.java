@@ -29,10 +29,16 @@ public class AddressDescriptionRestController {
         return new ResponseEntity<AddressDescription>(addressDescription, HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AddressDescription> editAddressDescription(@RequestBody final AddressDescription addressDescription) {
-        addressDescriptionJpaRepository.saveAndFlush(addressDescription);
-        return new ResponseEntity<AddressDescription>(addressDescription, HttpStatus.OK);
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AddressDescription> editAddressDescription(@PathVariable("id") final Integer id,@RequestBody final AddressDescription addressDescription) {
+
+        AddressDescription addressDescription2 = addressDescriptionJpaRepository.findById(id).get();
+
+        addressDescription2.setDescription(addressDescription.getDescription());
+        addressDescription2.setAddress(addressDescription.getAddress());
+
+        addressDescriptionJpaRepository.saveAndFlush(addressDescription2);
+        return new ResponseEntity<AddressDescription>(addressDescription2, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

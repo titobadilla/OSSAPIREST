@@ -1,14 +1,20 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Model")
-public class Model {
+public class Model implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
@@ -18,7 +24,6 @@ public class Model {
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    @JsonManagedReference
     private Brand brand;
 
     public Model() {

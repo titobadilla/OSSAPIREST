@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -9,7 +10,12 @@ import java.io.Serializable;
 @Table(name = "Address_description")
 public class AddressDescription implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
@@ -20,7 +26,6 @@ public class AddressDescription implements Serializable {
   
     @ManyToOne
     @JoinColumn(name = "address_id")
-    @JsonManagedReference
     private Address address;
 
     public AddressDescription(String description, Address address) {

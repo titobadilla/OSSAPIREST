@@ -9,7 +9,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "Tool")
 public class Tool implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;

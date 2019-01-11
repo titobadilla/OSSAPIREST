@@ -1,6 +1,9 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,15 @@ public class ClientRestController {
 	@GetMapping("/")
 	public ResponseEntity<List<Client>> listAllClients() {
 
-		List<Client> clients = clientJpaRepository.findAll();
+		List<Client> clients=new ArrayList<>();
+		try {
+			clients= clientJpaRepository.findAll();		
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+		
 		return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
 
 	}
@@ -60,7 +71,16 @@ public class ClientRestController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Client> deleteClient(@PathVariable("id") final String id) {
-		clientJpaRepository.deleteById(id);
+		
+		try {
+			clientJpaRepository.deleteById(id);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Error de borrado, por llave foranea");
+			
+		}
+		
 
 		return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
 	}

@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Group_client")
-public class GroupClient {
+public class GroupClient implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -26,7 +33,7 @@ public class GroupClient {
 	private String idHeadClient;
 	
 	@OneToMany(mappedBy = "group")
-	@JsonBackReference
+	@JsonManagedReference
 	private List<Client> clients;
 
 	public GroupClient() {
@@ -65,7 +72,7 @@ public class GroupClient {
 
 	@Override
 	public String toString() {
-		return "GroupClient [idGroup=" + idGroup + ", idHeadClient=" + idHeadClient + ", clients=" + clients + "]";
+		return "GroupClient [idGroup=" + idGroup + ", idHeadClient=" + idHeadClient  /*", clients=" + clients */+ "]";
 	}
 	
 	

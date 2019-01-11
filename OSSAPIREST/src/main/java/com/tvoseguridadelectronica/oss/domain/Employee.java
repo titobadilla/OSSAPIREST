@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Employee")
-public class Employee {
+public class Employee implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "id")
 	private String id;
@@ -35,28 +42,50 @@ public class Employee {
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_role_id")
-	@JsonManagedReference
 	private EmployeeRole role;
 	
-	@OneToMany(
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )
-	private List<Telephone> telephones;
+	@Column(name="username")
+	private String username;
+	
+	@Column(name="password")
+	private String password;
+	
+	@OneToMany(mappedBy="employee")
+	@JsonManagedReference
+	private List<TelephoneEmployee> telephones;
 
 	public Employee() {
 		this.role=new EmployeeRole();
 		this.telephones=new ArrayList<>();
 	}
 
-	public Employee(String id, String name, String lastName, String position, EmployeeRole role,
-			List<Telephone> telephones) {
+	
+
+	public Employee(String id, String name, String lastName, String position, EmployeeRole role, String username,
+			String password) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.position = position;
 		this.role = role;
-		this.telephones = telephones;
+		this.username = username;
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getId() {
@@ -99,19 +128,25 @@ public class Employee {
 		this.role = role;
 	}
 
-	public List<Telephone> getTelephones() {
+	public List<TelephoneEmployee> getTelephones() {
 		return telephones;
 	}
 
-	public void setTelephones(List<Telephone> telephones) {
+	public void setTelephones(List<TelephoneEmployee> telephones) {
 		this.telephones = telephones;
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", lastName=" + lastName + ", position=" + position + ", role="
-				+ role + ", telephones=" + telephones + "]";
+				+ role + ", username=" + username + ", password=" + password + ", telephones=" + telephones + "]";
 	}
+
+	
+
+	
 	
 	
 	
