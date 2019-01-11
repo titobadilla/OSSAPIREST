@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Inventory_category")
+@Table(name = "Work_order_detail")
 public class WorkOrderDetail  implements Serializable {
 
     @Id
