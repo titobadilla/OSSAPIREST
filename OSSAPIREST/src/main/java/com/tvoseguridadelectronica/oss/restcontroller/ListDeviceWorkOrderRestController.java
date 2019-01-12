@@ -1,8 +1,6 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
-import com.tvoseguridadelectronica.oss.domain.InventoryCategory;
-import com.tvoseguridadelectronica.oss.domain.ListDeviceWorkOrder;
-import com.tvoseguridadelectronica.oss.domain.ListDeviceWorkOrderId;
+import com.tvoseguridadelectronica.oss.domain.*;
 import com.tvoseguridadelectronica.oss.jparepository.ListDeviceWorkOrderJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping({"api/listDeviceWorkOrder"})
+@RequestMapping({"api/listdeviceworkorder"})
 public class ListDeviceWorkOrderRestController {
 
     @Autowired
@@ -27,8 +25,12 @@ public class ListDeviceWorkOrderRestController {
         return  new ResponseEntity<List<ListDeviceWorkOrder>>(listDeviceWorkOrders, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ListDeviceWorkOrder> getListDeviceWorkOrderById(@PathVariable("id") final ListDeviceWorkOrderId id) {
+    @GetMapping("/{idDevice}/{idListWorkOrder}")
+    public ResponseEntity<ListDeviceWorkOrder> getListDeviceWorkOrderById(@PathVariable("idDevice") final int deviceId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
+
+        ListDeviceWorkOrderId id = new ListDeviceWorkOrderId( );
+        id.setDeviceId(deviceId);
+        id.setListWorkOrderId(listWorkOrderId);
 
         ListDeviceWorkOrder listDeviceWorkOrder = listDeviceWorkOrderJpaRepository.findById(id).get();
         return new ResponseEntity<ListDeviceWorkOrder>(listDeviceWorkOrder, HttpStatus.OK);
@@ -37,12 +39,17 @@ public class ListDeviceWorkOrderRestController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ListDeviceWorkOrder> createlistDeviceWorkOrder(@RequestBody final ListDeviceWorkOrder listDeviceWorkOrder) {
 
+        System.out.println(listDeviceWorkOrder.getQuantity()+"   "+listDeviceWorkOrder.getId().getDeviceId()+"  "+listDeviceWorkOrder.getId().getListWorkOrderId());
         listDeviceWorkOrderJpaRepository.save(listDeviceWorkOrder);
         return new ResponseEntity<ListDeviceWorkOrder>(listDeviceWorkOrder, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ListDeviceWorkOrder> updateListDeviceWorkOrder(@PathVariable("id") final ListDeviceWorkOrderId id, @RequestBody final ListDeviceWorkOrder listDeviceWorkOrder){
+    @PutMapping(value = "/{idDevice}/{idListWorkOrder}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ListDeviceWorkOrder> updateListDeviceWorkOrder(@PathVariable("idDevice") final int deviceId, @PathVariable("idListWorkOrder") final int listWorkOrderId, @RequestBody final ListDeviceWorkOrder listDeviceWorkOrder){
+
+        ListDeviceWorkOrderId id = new ListDeviceWorkOrderId( );
+        id.setDeviceId(deviceId);
+        id.setListWorkOrderId(listWorkOrderId);
 
         ListDeviceWorkOrder currentListDeviceWorkOrder =  listDeviceWorkOrderJpaRepository.findById(id).get();
 
@@ -53,8 +60,12 @@ public class ListDeviceWorkOrderRestController {
         return new ResponseEntity<ListDeviceWorkOrder>(currentListDeviceWorkOrder,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ListDeviceWorkOrder> deleteListDeviceWorkOrder(@PathVariable("id") final ListDeviceWorkOrderId id) {
+    @DeleteMapping("/{idDevice}/{idListWorkOrder}")
+    public ResponseEntity<ListDeviceWorkOrder> deleteListDeviceWorkOrder(@PathVariable("idDevice") final int deviceId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
+
+        ListDeviceWorkOrderId id = new ListDeviceWorkOrderId( );
+        id.setDeviceId(deviceId);
+        id.setListWorkOrderId(listWorkOrderId);
 
         listDeviceWorkOrderJpaRepository.deleteById(id);
 

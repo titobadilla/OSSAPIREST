@@ -1,51 +1,49 @@
 package com.tvoseguridadelectronica.oss.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
 public class ListDeviceWorkOrderId implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    @Column(name = "list_work_order_id")
+    private int listWorkOrderId ;
 
-    @ManyToOne
-    private ListWorkOrder listWorkOrder;
-
-    @ManyToOne
-    private Device device;
-
-    public ListDeviceWorkOrderId(ListWorkOrder listWorkOrder, Device device) {
-        this.listWorkOrder = listWorkOrder;
-        this.device = device;
-    }
+    @Column(name = "id_device")
+    private int deviceId;
 
     public ListDeviceWorkOrderId() {
-        this.listWorkOrder = new ListWorkOrder();
-        this.device = new Device();
     }
 
-    public ListWorkOrder getListWorkOrder() {
-        return listWorkOrder;
+    public ListDeviceWorkOrderId(int listWorkOrderId, int deviceId) {
+        this.listWorkOrderId = listWorkOrderId;
+        this.deviceId = deviceId;
     }
 
-    public void setListWorkOrder(ListWorkOrder listWorkOrder) {
-        this.listWorkOrder = listWorkOrder;
+    public int getListWorkOrderId() {
+        return listWorkOrderId;
     }
 
-    public Device getDevice() {
-        return device;
+    public void setListWorkOrderId(int listWorkOrderId) {
+        this.listWorkOrderId = listWorkOrderId;
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
+    public int getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(int deviceId) {
+        this.deviceId = deviceId;
     }
 
     @Override
     public String toString() {
         return "ListDeviceWorkOrderId{" +
-                "listWorkOrder=" + listWorkOrder +
-                ", device=" + device +
+                "listWorkOrderId=" + listWorkOrderId +
+                ", deviceId=" + deviceId +
                 '}';
     }
 }

@@ -11,7 +11,6 @@ public class ListDeviceWorkOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Autowired
     @EmbeddedId
     private ListDeviceWorkOrderId id;
 
@@ -31,4 +30,12 @@ public class ListDeviceWorkOrder implements Serializable {
     }
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public ListDeviceWorkOrderId getId() {
+        return id;
+    }
+
+    public void setId(ListDeviceWorkOrderId id) {
+        this.id = id;
+    }
 }

@@ -11,19 +11,26 @@ public class ListMaterialWorkOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Autowired
     @EmbeddedId
     private ListMaterialWorkOrderId id;
 
     @Column(name = "quantity")
     private int quantity;
 
-    public ListMaterialWorkOrder( int quantity) {
+    public ListMaterialWorkOrder(int quantity) {
         this.quantity = quantity;
     }
 
     public ListMaterialWorkOrder() {
         this.id = new ListMaterialWorkOrderId();
+    }
+
+    public ListMaterialWorkOrderId getId() {
+        return id;
+    }
+
+    public void setId(ListMaterialWorkOrderId id) {
+        this.id = id;
     }
 
     public int getQuantity() {
@@ -32,13 +39,5 @@ public class ListMaterialWorkOrder implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "ListMaterialWorkOrder{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                '}';
     }
 }

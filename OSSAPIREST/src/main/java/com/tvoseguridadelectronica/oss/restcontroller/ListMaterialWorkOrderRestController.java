@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping({"api/listMaterialWorkOrder"})
+@RequestMapping({"api/listmaterialworkorder"})
 public class ListMaterialWorkOrderRestController {
-
 
     @Autowired
     private ListMaterialWorkOrderJpaRepository listMaterialWorkOrderJpaRepository;
@@ -37,12 +36,18 @@ public class ListMaterialWorkOrderRestController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ListMaterialWorkOrder> createlistMaterialWorkOrder(@RequestBody final ListMaterialWorkOrder listMaterialWorkOrder) {
 
+        System.out.println(listMaterialWorkOrder.getQuantity()+"   "+listMaterialWorkOrder.getId().getMaterialId()+"  "+listMaterialWorkOrder.getId().getListWorkOrderId());
+
         listMaterialWorkOrderJpaRepository.save(listMaterialWorkOrder);
         return new ResponseEntity<ListMaterialWorkOrder>(listMaterialWorkOrder, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ListMaterialWorkOrder> updateListMaterialWorkOrder(@PathVariable("id") final ListMaterialWorkOrderId id, @RequestBody final ListMaterialWorkOrder listMaterialWorkOrder){
+    @PutMapping(value = "/{idMaterial}/{idListWorkOrder}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ListMaterialWorkOrder> updateListMaterialWorkOrder(@PathVariable("idMaterial") final int materialId, @PathVariable("idListWorkOrder") final int listWorkOrderId, @RequestBody final ListMaterialWorkOrder listMaterialWorkOrder){
+
+        ListMaterialWorkOrderId id = new ListMaterialWorkOrderId( );
+        id.setMaterialId(materialId);
+        id.setListWorkOrderId(listWorkOrderId);
 
         ListMaterialWorkOrder currentListMaterialWorkOrder =  listMaterialWorkOrderJpaRepository.findById(id).get();
 
@@ -53,8 +58,12 @@ public class ListMaterialWorkOrderRestController {
         return new ResponseEntity<ListMaterialWorkOrder>(currentListMaterialWorkOrder,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ListMaterialWorkOrder> deleteListMaterialWorkOrder(@PathVariable("id") final ListMaterialWorkOrderId id) {
+    @DeleteMapping("/{idMaterial}/{idListWorkOrder}")
+    public ResponseEntity<ListMaterialWorkOrder> deleteListMaterialWorkOrder(@PathVariable("idMaterial") final int materialId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
+
+        ListMaterialWorkOrderId id = new ListMaterialWorkOrderId( );
+        id.setMaterialId(materialId);
+        id.setListWorkOrderId(listWorkOrderId);
 
         listMaterialWorkOrderJpaRepository.deleteById(id);
 

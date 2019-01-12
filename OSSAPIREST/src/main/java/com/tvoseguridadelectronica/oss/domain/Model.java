@@ -6,12 +6,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Model")
+@Table(name = "model")
 public class Model implements Serializable{
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,10 +24,12 @@ public class Model implements Serializable{
     private Brand brand;
 
     public Model() {
+        this.brand = new Brand();
     }
 
-    public Model(String name) {
+    public Model(String name, Brand brand) {
         this.name = name;
+        this.brand = brand;
     }
 
     public int getId() {
@@ -47,5 +46,13 @@ public class Model implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }
