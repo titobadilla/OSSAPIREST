@@ -7,5 +7,8 @@ import com.tvoseguridadelectronica.oss.domain.Employee;
 
 @Repository
 public interface EmployeeJpaRepository extends JpaRepository<Employee,String>{
+	
+	Employee findByUsername(String username);
+	
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,10 @@ public class EmployeeRestController {
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Employee> createEmployee(@RequestBody final Employee employee) {
 
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(employee.getPassword());
+		employee.setPassword(hashedPassword);
+		
 		employeeJpaRepository.save(employee);
 		return new ResponseEntity<Employee>(employee, HttpStatus.NO_CONTENT);
 
@@ -43,7 +48,10 @@ public class EmployeeRestController {
 	
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Employee> editEmployee(@RequestBody final Employee employee) {
-
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(employee.getPassword());
+		employee.setPassword(hashedPassword);
 		employeeJpaRepository.saveAndFlush(employee);
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 
