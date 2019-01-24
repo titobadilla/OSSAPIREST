@@ -70,6 +70,14 @@ public class ClientRestController {
 
 	}	
 	
+	/*@GetMapping("/findByContactName/{contactName}")
+	public ResponseEntity<Client> findClientByContactName(@PathVariable("contactName") final String contactName ) {
+
+		Client client = clientJpaRepository.findByContactNameIsLike(contactName).get();
+		return new ResponseEntity<Client>(client, HttpStatus.OK);
+
+	}	*/
+	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Client> deleteClient(@PathVariable("id") final String id) {

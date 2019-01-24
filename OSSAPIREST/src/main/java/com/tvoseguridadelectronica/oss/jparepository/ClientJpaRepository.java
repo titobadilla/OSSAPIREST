@@ -7,5 +7,7 @@ import com.tvoseguridadelectronica.oss.domain.Client;
 
 @Repository
 public interface ClientJpaRepository  extends JpaRepository<Client,String>{
+	
+	Client findByContactNameIsLike(String contactName);
 
 }
