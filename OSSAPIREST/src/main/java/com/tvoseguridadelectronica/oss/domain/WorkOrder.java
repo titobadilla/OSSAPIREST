@@ -3,9 +3,13 @@ package com.tvoseguridadelectronica.oss.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.tvoseguridadelectronica.oss.utilities.FormatDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +22,9 @@ public class WorkOrder implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -25,6 +32,16 @@ public class WorkOrder implements Serializable{
 
 	@Column(name = "description")
 	private String description;
+	
+	@Column(name = "start_date")
+	private Timestamp startDate;
+	
+	@Column(name = "end_date")
+	private Timestamp endDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "color_id")
+	private Color color;
 
 	@ManyToOne
 	@JoinColumn(name = "client_id")
@@ -48,13 +65,16 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "work_order_type_id")
 	WorkOrderType workOrderType;
 
-	public WorkOrder(String description, Client client, List<Employee> employees, ListWorkOrder listWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
+	public WorkOrder(String description,Timestamp startDate,Timestamp endDate,Color color ,Client client, List<Employee> employees, ListWorkOrder listWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
 		this.description = description;
 		this.client = client;
 		this.employees = employees;
 		this.listWorkOrder = listWorkOrder;
 		this.workOrderDetail = workOrderDetail;
 		this.workOrderType = workOrderType;
+		this.startDate=startDate;
+		this.endDate=endDate;
+		this.color=color;
 	}
 
 	public WorkOrder() {
@@ -62,6 +82,8 @@ public class WorkOrder implements Serializable{
 		this.employees=new ArrayList<>();
 		this.listWorkOrder=new ListWorkOrder();
 		this.workOrderType=new WorkOrderType();
+		this.color=new Color();
+		
 	}
 
 
@@ -121,12 +143,38 @@ public class WorkOrder implements Serializable{
 		this.workOrderType = workOrderType;
 	}
 
+	public String getStartDate() {
+		return FormatDate.sdf.format(startDate);
+	}
+
+	public void setStartDate(Timestamp startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return FormatDate.sdf.format(endDate);
+	}
+
+	public void setEndDate(Timestamp endDate) {
+		this.endDate = endDate;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 	@Override
 	public String toString() {
-		return "WorkOrder [id=" + id + ", description=" + description + ", client=" + client + ", employees="
-				+ employees + ", listWorkOrder=" + listWorkOrder + ", workOrderDetail=" + workOrderDetail
-				+ ", workOrderType=" + workOrderType + "]";
+		return "WorkOrder [id=" + id + ", description=" + description + ", startDate=" + startDate.toGMTString() + ", endDate="
+				+ endDate + ", color=" + color + ", client=" + client + ", employees=" + employees + ", listWorkOrder="
+				+ listWorkOrder + ", workOrderDetail=" + workOrderDetail + ", workOrderType=" + workOrderType + "]";
 	}
+
+	
 	
 	
 }
