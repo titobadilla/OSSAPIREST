@@ -18,15 +18,17 @@ public class Color {
 	
 	@Column(name = "color")
 	private String color;
+	
+	private String state;
 
 	public Color() {
 		
 	}
 	
-	public Color(int id, String color) {
-		super();
+	public Color(int id, String color, String state) {
 		this.id = id;
 		this.color = color;
+		this.state=state;
 	}
 
 	public int getId() {
@@ -45,10 +47,18 @@ public class Color {
 		this.color = color;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
-		return "Color [id=" + id + ", color=" + color + "]";
+		return "Color [id=" + id + ", color=" + color + ", state=" + state + "]";
 	}
-	
 
+	
 }
