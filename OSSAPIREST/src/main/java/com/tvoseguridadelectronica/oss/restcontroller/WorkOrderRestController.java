@@ -32,19 +32,10 @@ public class WorkOrderRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkOrder> editWorkOrder(@PathVariable("id") final Integer id,@RequestBody final WorkOrder workOrder) {
-
-        WorkOrder workOrder2 = workOrderJpaRepository.findById(id).get();
-
-        workOrder2.setDescription(workOrder.getDescription());
-        workOrder2.setClient(workOrder.getClient());
-        workOrder2.setEmployees(workOrder.getEmployees());
-        workOrder2.setListWorkOrder(workOrder.getListWorkOrder());
-        //workOrder2.setWorkOrderDetail(workOrder.getWorkOrderDetail());
-        workOrder2.setWorkOrderType(workOrder.getWorkOrderType());
         
-        workOrderJpaRepository.saveAndFlush(workOrder2);
+        workOrderJpaRepository.saveAndFlush(workOrder);
         
-        return new ResponseEntity<WorkOrder>(workOrder2, HttpStatus.OK);
+        return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<WorkOrder> findWorkOrderById(@PathVariable("id") final int id ) {
