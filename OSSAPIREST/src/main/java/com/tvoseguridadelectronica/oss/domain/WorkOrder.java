@@ -167,6 +167,21 @@ public class WorkOrder implements Serializable{
 		this.color = color;
 	}
 
+	
+	public String getNameClientOptional(){
+		return this.client.getName();
+	}
+	
+	public String getLocationClientOptional(){
+		
+		String address=this.client.getAddressDescription().getAddress().getProvince() 
+				+ ", "+ this.client.getAddressDescription().getAddress().getCanton()
+				+", "+ this.client.getAddressDescription().getAddress().getDistrict()
+				+"; "+  this.client.getAddressDescription().getDescription();
+		
+		return address;
+	}
+	
 	@Override
 	public String toString() {
 		return "WorkOrder [id=" + id + ", description=" + description + ", startDate=" + startDate.toGMTString() + ", endDate="

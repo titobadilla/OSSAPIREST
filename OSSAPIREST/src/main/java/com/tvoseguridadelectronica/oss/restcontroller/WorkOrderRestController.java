@@ -21,6 +21,7 @@ public class WorkOrderRestController {
     @GetMapping("/")
     public ResponseEntity<List<WorkOrder>> listAllWorkOrder() {
         List<WorkOrder> workOrders = workOrderJpaRepository.findAll();
+
         return new ResponseEntity<List<WorkOrder>>(workOrders, HttpStatus.OK);
     }
 
