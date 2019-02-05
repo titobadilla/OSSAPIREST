@@ -17,7 +17,8 @@ public class WorkOrderType implements Serializable {
     @Column(name = "name")
     private String name;
 
-    public WorkOrderType(String name) {
+    public WorkOrderType(int id,String name) {
+    	this.id=id;
         this.name = name;
     }
 

@@ -28,7 +28,8 @@ public class AddressDescription implements Serializable {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public AddressDescription(String description, Address address) {
+    public AddressDescription(int id,String description, Address address) {
+        this.id=id;
         this.description = description;
         this.address = address;
     }

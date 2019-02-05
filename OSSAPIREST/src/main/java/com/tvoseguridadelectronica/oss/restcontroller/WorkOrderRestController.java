@@ -2,6 +2,8 @@ package com.tvoseguridadelectronica.oss.restcontroller;
 
 import com.tvoseguridadelectronica.oss.domain.WorkOrder;
 import com.tvoseguridadelectronica.oss.jparepository.WorkOrderJpaRepository;
+import com.tvoseguridadelectronica.oss.repository.WorkOrderDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,13 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping({"/api/workorder"})
 public class WorkOrderRestController {
 
     @Autowired
     private WorkOrderJpaRepository workOrderJpaRepository;
+    @Autowired
+    private WorkOrderDao workOrderDao;
 
     @GetMapping("/")
     public ResponseEntity<List<WorkOrder>> listAllWorkOrder() {
@@ -45,6 +49,15 @@ public class WorkOrderRestController {
         return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
 
     }
+    
+    @GetMapping("/findworkorderbystartdate/{date}")
+    public ResponseEntity<List<WorkOrder>> findWorkOrderByStartDate(@PathVariable("date") final String date ) {
+
+        List<WorkOrder> workOrder = workOrderDao.findWorkOrdersByStartDateLike(date);
+        return new ResponseEntity<List<WorkOrder>>(workOrder, HttpStatus.OK);
+
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<WorkOrder> deleteWorkOrder(@PathVariable("id") final int id) {
