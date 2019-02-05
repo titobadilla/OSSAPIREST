@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping({"/api/workorder"})
 public class WorkOrderRestController {
@@ -57,6 +57,24 @@ public class WorkOrderRestController {
         return new ResponseEntity<List<WorkOrder>>(workOrder, HttpStatus.OK);
 
     }
+    
+    @GetMapping("/findworkorderbyweekwithstartdateandenddate/{dateStart}/{dateEnd}")
+    public ResponseEntity<List<WorkOrder>> findWorkOrderByWeek(@PathVariable("dateStart") final String dateStart,
+    		@PathVariable("dateEnd") final String dateEnd) {
+
+        List<WorkOrder> workOrder = workOrderDao.findWorkOrdersByWeekWithStartDateAndEndDateLike(dateStart,dateEnd);
+        return new ResponseEntity<List<WorkOrder>>(workOrder, HttpStatus.OK);
+
+    }
+    
+    @GetMapping("/findworkorderbymonthandyear/{date}")
+    public ResponseEntity<List<WorkOrder>> findWorkOrderByMonth(@PathVariable("date") final String date ) {
+
+        List<WorkOrder> workOrder = workOrderDao.findWorkOrdersByMonthAndYear(date);
+        return new ResponseEntity<List<WorkOrder>>(workOrder, HttpStatus.OK);
+
+    }
+    
 
 
     @DeleteMapping("/{id}")

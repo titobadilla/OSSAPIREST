@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,22 @@ public class WorkOrderDao {
 	    	
 	    }
 	    
+	    public List<WorkOrder> findWorkOrdersByWeekWithStartDateAndEndDateLike(String dateStart,String dateEnd){
+	    	String sqlProcedure = "{call OSS_Work_Orders_By_Week_With_Start_Date_And_End_Date(?,?)}";
+
+			List<WorkOrder> listWorkOrders = this.jdbcTemplate.query(sqlProcedure, new WorkOrdersByStartDateLikeExtractor(),dateStart,dateEnd);
+			return listWorkOrders;    	
+	    	
+	    }
+	    
+	    public List<WorkOrder> findWorkOrdersByMonthAndYear(String date){
+	    	String sqlProcedure = "{call OSS_Work_Orders_By_Month_And_Year(?)}";
+
+			List<WorkOrder> listWorkOrders = this.jdbcTemplate.query(sqlProcedure, new WorkOrdersByStartDateLikeExtractor(),date);
+			return listWorkOrders;    	
+	    	
+	    }
+	    
 	    
 	    
 	    private static final class WorkOrdersByStartDateLikeExtractor implements ResultSetExtractor<List<WorkOrder>> {
@@ -56,13 +73,6 @@ public class WorkOrderDao {
 				// TODO Auto-generated method stub
 				Map<Integer, WorkOrder> map = new HashMap<Integer, WorkOrder>();
 				WorkOrder workOrder = null;
-				int date;
-				int month;
-				int year;
-				int hour;
-				int minute;
-				int second;
-				int nano=0;
 				String dateStart;
 				String dateEnd;
 				
@@ -75,21 +85,9 @@ public class WorkOrderDao {
 						workOrder.setId(id);
 						workOrder.setDescription(rs.getString("description"));
 						dateStart=rs.getString("start_date");
-						year=Integer.parseInt(dateStart.substring(0, 3));
-						month=Integer.parseInt(dateStart.substring(5, 6));
-						date=Integer.parseInt(dateStart.substring(8, 9));
-						hour=Integer.parseInt(dateStart.substring(11, 12));
-						minute=Integer.parseInt(dateStart.substring(14, 15));
-						second=Integer.parseInt(dateStart.substring(17, 18));	
-						workOrder.setStartDate(new Timestamp(year,month,date,hour,minute,second,nano));
+						workOrder.setStartDate(Timestamp.valueOf(dateStart));
 						dateEnd=rs.getString("end_date");
-						year=Integer.parseInt(dateEnd.substring(0, 3));
-						month=Integer.parseInt(dateEnd.substring(5, 6));
-						date=Integer.parseInt(dateEnd.substring(8, 9));
-						hour=Integer.parseInt(dateEnd.substring(11, 12));
-						minute=Integer.parseInt(dateEnd.substring(14, 15));
-						second=Integer.parseInt(dateEnd.substring(17, 18));
-						workOrder.setEndDate(new Timestamp(year,month,date,hour,minute,second,nano));
+						workOrder.setEndDate(Timestamp.valueOf(dateEnd));
 						workOrder.setColor(new Color(rs.getInt("color_id"),rs.getString("color"),rs.getString("state")));
 						Client client=new Client();
 						client.setId(rs.getString("client_id"));
