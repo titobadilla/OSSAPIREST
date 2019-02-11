@@ -18,15 +18,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tvoseguridadelectronica.oss.domain.Employee;
+import com.tvoseguridadelectronica.oss.domain.TelephoneEmployee;
 import com.tvoseguridadelectronica.oss.jparepository.EmployeeJpaRepository;
+import com.tvoseguridadelectronica.oss.jparepository.TelephoneEmployeeJpaRepository;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping({ "/api/employee" })
 public class EmployeeRestController {
 	
 	@Autowired
 	private EmployeeJpaRepository employeeJpaRepository;
+	
+	@Autowired
+	private TelephoneEmployeeJpaRepository telephoneEmployeeJpaRepository;
 	
 	@GetMapping("/")
 	public ResponseEntity<List<Employee>> listAllEmployees() {
@@ -44,8 +49,17 @@ public class EmployeeRestController {
 		employee.setPassword(hashedPassword);
 		
 		employeeJpaRepository.save(employee);
+		this.loadEmployeeWithTelephones(employee);
+		
 		return new ResponseEntity<Employee>(employee, HttpStatus.NO_CONTENT);
 
+	}
+	
+	private void loadEmployeeWithTelephones(Employee employeeUpdate){
+		List<TelephoneEmployee> telephones=employeeUpdate.getTelephones();
+		for (TelephoneEmployee telephoneEmployeeElement :telephones) {
+			this.telephoneEmployeeJpaRepository.save(telephoneEmployeeElement);					
+		}				
 	}
 	
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)

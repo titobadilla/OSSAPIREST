@@ -14,7 +14,7 @@ import com.tvoseguridadelectronica.oss.domain.Employee;
 import com.tvoseguridadelectronica.oss.domain.AuthToken;
 import com.tvoseguridadelectronica.oss.service.EmployeeService;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping("/api/token")
 public class AuthenticationRestController {
