@@ -1,11 +1,7 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonNullFormatVisitor;
-import com.tvoseguridadelectronica.oss.domain.Client;
-import com.tvoseguridadelectronica.oss.jparepository.ClientJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,9 +25,6 @@ public class GroupClientRestController {
 	
 	@Autowired
 	private GroupClientJpaRepository groupClientJpaRepository;
-
-	@Autowired
-	private ClientJpaRepository clientJpaRepository;
 	
 	@GetMapping("/")
 	public ResponseEntity<List<GroupClient>> listAllGroupsClient(){
@@ -72,28 +65,5 @@ public class GroupClientRestController {
 		groupClientJpaRepository.deleteById(id);
 		return new ResponseEntity<GroupClient>(HttpStatus.NO_CONTENT);
 	}
-
-	@GetMapping("/headClients")
-	public ResponseEntity<List<Client>> listAllHeadClient(){
-
-		List<GroupClient> groupsClient = groupClientJpaRepository.findAll();
-		List<Client> headClients = new ArrayList<Client>();
-
-			int lenght = groupsClient.size()-1;
-		for (int i = 0; i <=lenght ; i++) {
-			Client client = clientJpaRepository.findById(groupsClient.get(i).getIdHeadClient()).get();
-			headClients.add(client);
-		}
-		return new ResponseEntity<List<Client>>(headClients, HttpStatus.OK);
-
-	}
-
-	@GetMapping("/clientsOfheadClients/{id}")
-	public ResponseEntity<List<Client>> findClientsOfHeadClient(@PathVariable("id") final String id ) {
-
-		GroupClient groupClient = groupClientJpaRepository.getGroupClientByIdHeadClient(id);
-		return new ResponseEntity<List<Client>>(groupClient.getClients(), HttpStatus.OK);
-	}
-
 
 }

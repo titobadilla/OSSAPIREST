@@ -1,5 +1,7 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +24,17 @@ import com.tvoseguridadelectronica.oss.domain.TelephoneEmployee;
 import com.tvoseguridadelectronica.oss.jparepository.EmployeeJpaRepository;
 import com.tvoseguridadelectronica.oss.jparepository.TelephoneEmployeeJpaRepository;
 
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping({ "/api/employee" })
 public class EmployeeRestController {
-	
+
 	@Autowired
 	private EmployeeJpaRepository employeeJpaRepository;
-	
+
 	@Autowired
 	private TelephoneEmployeeJpaRepository telephoneEmployeeJpaRepository;
-	
+
 	@GetMapping("/")
 	public ResponseEntity<List<Employee>> listAllEmployees() {
 
@@ -40,31 +42,31 @@ public class EmployeeRestController {
 		return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
 
 	}
-	
+
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Employee> createEmployee(@RequestBody final Employee employee) {
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(employee.getPassword());
 		employee.setPassword(hashedPassword);
-		
+
 		employeeJpaRepository.save(employee);
 		this.loadEmployeeWithTelephones(employee);
-		
+
 		return new ResponseEntity<Employee>(employee, HttpStatus.NO_CONTENT);
 
 	}
-	
-	private void loadEmployeeWithTelephones(Employee employeeUpdate){
-		List<TelephoneEmployee> telephones=employeeUpdate.getTelephones();
-		for (TelephoneEmployee telephoneEmployeeElement :telephones) {
-			this.telephoneEmployeeJpaRepository.save(telephoneEmployeeElement);					
-		}				
+
+	private void loadEmployeeWithTelephones(Employee employeeUpdate) {
+		List<TelephoneEmployee> telephones = employeeUpdate.getTelephones();
+		for (TelephoneEmployee telephoneEmployeeElement : telephones) {
+			this.telephoneEmployeeJpaRepository.save(telephoneEmployeeElement);
+		}
 	}
-	
+
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Employee> editEmployee(@RequestBody final Employee employee) {
-		
+
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(employee.getPassword());
 		employee.setPassword(hashedPassword);
@@ -72,21 +74,27 @@ public class EmployeeRestController {
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 
 	}
-	
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Employee> findEmployeeById(@PathVariable("id") final String id ) {
+	public ResponseEntity<Employee> findEmployeeById(@PathVariable("id") final String id) {
 
 		Employee employee = employeeJpaRepository.findById(id).get();
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 
-	}	
-	
-	
+	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable("id") final String id) {
-		employeeJpaRepository.deleteById(id);
 
+		List<TelephoneEmployee> telephonesEmployee = this.telephoneEmployeeJpaRepository.findByEmployeeId(id);
+		if (!telephonesEmployee.isEmpty()) {
+			for (Iterator iterator = telephonesEmployee.iterator(); iterator.hasNext();) {
+				TelephoneEmployee telephoneEmployee = (TelephoneEmployee) iterator.next();
+				this.telephoneEmployeeJpaRepository.deleteById(telephoneEmployee.getId());
+			}
+		}
+
+		employeeJpaRepository.deleteById(id);
 		return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 	}
 
