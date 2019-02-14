@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tvoseguridadelectronica.oss.domain.TelephoneEmployee;
 import com.tvoseguridadelectronica.oss.jparepository.TelephoneEmployeeJpaRepository;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping({"/api/telephoneemployee"})
 public class TelephoneEmployeeRestController {
