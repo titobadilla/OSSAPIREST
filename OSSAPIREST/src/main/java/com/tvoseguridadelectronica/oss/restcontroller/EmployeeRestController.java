@@ -63,9 +63,26 @@ public class EmployeeRestController {
 			this.telephoneEmployeeJpaRepository.save(telephoneEmployeeElement);
 		}
 	}
+	
+	private void updateTelephonesEmployee(Employee employeeUpdate) {
+		List<TelephoneEmployee> telephones = employeeUpdate.getTelephones();
+		
+		if(telephones.size()>1){
+			if(telephones.get(1).getNumber().equalsIgnoreCase("")){
+				this.telephoneEmployeeJpaRepository.delete(telephones.get(1));
+				telephones.remove(1);
+			}
+		}
+		
+		for (TelephoneEmployee telephoneEmployeeElement : telephones) {
+			this.telephoneEmployeeJpaRepository.saveAndFlush(telephoneEmployeeElement);
+		}
+	}
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Employee> editEmployee(@RequestBody final Employee employee) {
+		
+		this.updateTelephonesEmployee(employee);
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(employee.getPassword());
