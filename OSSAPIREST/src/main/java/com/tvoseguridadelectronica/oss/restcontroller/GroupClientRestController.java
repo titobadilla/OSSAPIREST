@@ -30,6 +30,7 @@ public class GroupClientRestController {
 	public ResponseEntity<List<GroupClient>> listAllGroupsClient(){
 
 		List<GroupClient> groupsClient = groupClientJpaRepository.findAll();
+		
 		return new ResponseEntity<List<GroupClient>>(groupsClient, HttpStatus.OK);
 
 	}
