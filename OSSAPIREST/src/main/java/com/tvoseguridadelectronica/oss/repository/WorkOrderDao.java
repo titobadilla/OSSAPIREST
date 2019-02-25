@@ -18,11 +18,15 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.tvoseguridadelectronica.oss.domain.Address;
 import com.tvoseguridadelectronica.oss.domain.AddressDescription;
+import com.tvoseguridadelectronica.oss.domain.Canton;
+import com.tvoseguridadelectronica.oss.domain.CantonId;
 import com.tvoseguridadelectronica.oss.domain.Client;
 import com.tvoseguridadelectronica.oss.domain.Color;
+import com.tvoseguridadelectronica.oss.domain.District;
+import com.tvoseguridadelectronica.oss.domain.DistrictId;
 import com.tvoseguridadelectronica.oss.domain.ListWorkOrder;
+import com.tvoseguridadelectronica.oss.domain.Province;
 import com.tvoseguridadelectronica.oss.domain.WorkOrder;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderType;
 
@@ -96,7 +100,11 @@ public class WorkOrderDao {
 						client.setName(rs.getString("name_client"));
 						client.setAddressDescription(new AddressDescription(rs.getInt("address_description_id")
 						,rs.getString("address_description")
-						,new Address(rs.getInt("address_id"),rs.getString("province"),rs.getString("district"),rs.getString("canton"))));
+						,new Province(rs.getString("province_id"),rs.getString("province_name")),
+						new Canton(new CantonId(rs.getString("canton_id"),new Province())
+								,rs.getString("canton_name")),
+						new District(new DistrictId(rs.getString("district_id"),new Province(),new Canton())
+								,rs.getString("district_name"))));
 						workOrder.setClient(client);
 						workOrder.setWorkOrderType(new WorkOrderType(rs.getInt("work_order_type_id"),rs.getString("name")));
 						ListWorkOrder listWorkOrder=new ListWorkOrder();

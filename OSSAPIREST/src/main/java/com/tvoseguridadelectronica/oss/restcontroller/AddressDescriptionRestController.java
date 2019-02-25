@@ -33,13 +33,10 @@ public class AddressDescriptionRestController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AddressDescription> editAddressDescription(@PathVariable("id") final Integer id,@RequestBody final AddressDescription addressDescription) {
 
-        AddressDescription addressDescription2 = addressDescriptionJpaRepository.findById(id).get();
+        
 
-        addressDescription2.setDescription(addressDescription.getDescription());
-        addressDescription2.setAddress(addressDescription.getAddress());
-
-        addressDescriptionJpaRepository.saveAndFlush(addressDescription2);
-        return new ResponseEntity<AddressDescription>(addressDescription2, HttpStatus.OK);
+        addressDescriptionJpaRepository.saveAndFlush(addressDescription);
+        return new ResponseEntity<AddressDescription>(addressDescription, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
