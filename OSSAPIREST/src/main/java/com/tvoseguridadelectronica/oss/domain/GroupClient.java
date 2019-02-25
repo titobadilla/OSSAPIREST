@@ -12,11 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Group_client")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idGroup")
 public class GroupClient implements Serializable{
 	
 	/**
@@ -29,20 +32,41 @@ public class GroupClient implements Serializable{
 	@Column(name = "id")
 	private int idGroup;
 	
-	@Column(name = "id_head_client")
-	private String idHeadClient;
+	@Column(name = "name_group")
+	private String nameGroup;
+	
+	@Column(name = "contact_name")
+	private String contactName;
+	
+	@Column(name = "contact_last_name")
+	private String contactLastName;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "phone1")
+	private String phone1;
+	
+	@Column(name = "phone2")
+	private String phone2;
 	
 	@OneToMany(mappedBy = "group")
-	@JsonManagedReference
+	//@JsonManagedReference
 	private List<Client> clients;
 
 	public GroupClient() {
 		this.clients = new ArrayList<>();
 	}
 
-	public GroupClient(int idGroup, String idHeadClient, List<Client> clients) {
+	public GroupClient(int idGroup, String nameGroup, String contactName, String contactLastName, String email,
+			String phone1, String phone2, List<Client> clients) {
 		this.idGroup = idGroup;
-		this.idHeadClient = idHeadClient;
+		this.nameGroup = nameGroup;
+		this.contactName = contactName;
+		this.contactLastName = contactLastName;
+		this.email = email;
+		this.phone1 = phone1;
+		this.phone2 = phone2;
 		this.clients = clients;
 	}
 
@@ -54,12 +78,52 @@ public class GroupClient implements Serializable{
 		this.idGroup = idGroup;
 	}
 
-	public String getIdHeadClient() {
-		return idHeadClient;
+	public String getNameGroup() {
+		return nameGroup;
 	}
 
-	public void setIdHeadClient(String idHeadClient) {
-		this.idHeadClient = idHeadClient;
+	public void setNameGroup(String nameGroup) {
+		this.nameGroup = nameGroup;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	public String getContactLastName() {
+		return contactLastName;
+	}
+
+	public void setContactLastName(String contactLastName) {
+		this.contactLastName = contactLastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone1() {
+		return phone1;
+	}
+
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
+	}
+
+	public String getPhone2() {
+		return phone2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
 	}
 
 	public List<Client> getClients() {
@@ -72,9 +136,12 @@ public class GroupClient implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GroupClient [idGroup=" + idGroup + ", idHeadClient=" + idHeadClient  /*", clients=" + clients */+ "]";
+		return "GroupClient [idGroup=" + idGroup + ", nameGroup=" + nameGroup + ", contactName=" + contactName
+				+ ", contactLastName=" + contactLastName + ", email=" + email + ", phone1=" + phone1 + ", phone2="
+				+ phone2 + ", clients=" + clients + "]";
 	}
-	
+
+
 	
 }
 

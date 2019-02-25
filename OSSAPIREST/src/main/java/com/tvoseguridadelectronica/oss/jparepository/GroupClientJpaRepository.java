@@ -8,4 +8,7 @@ import com.tvoseguridadelectronica.oss.domain.GroupClient;
 @Repository
 public interface GroupClientJpaRepository  extends JpaRepository<GroupClient,Integer>{
 
+
+
+
 }

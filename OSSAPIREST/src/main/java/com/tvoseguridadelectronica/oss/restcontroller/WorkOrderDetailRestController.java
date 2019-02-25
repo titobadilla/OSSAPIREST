@@ -8,11 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
-@RequestMapping({"api/workOrderDetail"})
+@RequestMapping({"api/workorderdetail"})
 public class WorkOrderDetailRestController {
 
     @Autowired
@@ -54,5 +55,14 @@ public class WorkOrderDetailRestController {
 
         return new ResponseEntity<WorkOrderDetail>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/search/{f1}/{f2}")
+    public ResponseEntity<WorkOrderDetail[]> listWorkOrderDetailByDate(@PathVariable("f1") final Date f1,
+                                                                       @PathVariable("f2") final Date f2) {
+
+        WorkOrderDetail[] details = workOrderDetailJpaRepository.findWorkOrderDetailByDateBetween(f1,f2);
+        return  new ResponseEntity<WorkOrderDetail[]>(details, HttpStatus.OK);
+    }
+
 
 }

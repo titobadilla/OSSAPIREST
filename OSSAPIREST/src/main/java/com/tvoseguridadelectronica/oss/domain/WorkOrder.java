@@ -174,9 +174,9 @@ public class WorkOrder implements Serializable{
 	
 	public String getLocationClientOptional(){
 		
-		String address=this.client.getAddressDescription().getAddress().getProvince() 
-				+ ", "+ this.client.getAddressDescription().getAddress().getCanton()
-				+", "+ this.client.getAddressDescription().getAddress().getDistrict()
+		String address=this.client.getAddressDescription().getDistrict().getDistrictId().getCanton().getCantonId().getProvince().getName()
+				+ ", "+ this.client.getAddressDescription().getDistrict().getDistrictId().getCanton().getName()
+				+", "+ this.client.getAddressDescription().getDistrict().getName()
 				+"; "+  this.client.getAddressDescription().getDescription();
 		
 		return address;

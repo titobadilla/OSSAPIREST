@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tvoseguridadelectronica.oss.domain.GroupClient;
 import com.tvoseguridadelectronica.oss.jparepository.GroupClientJpaRepository;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping({ "/api/groupclient" })
 public class GroupClientRestController {
@@ -30,6 +30,7 @@ public class GroupClientRestController {
 	public ResponseEntity<List<GroupClient>> listAllGroupsClient(){
 
 		List<GroupClient> groupsClient = groupClientJpaRepository.findAll();
+		
 		return new ResponseEntity<List<GroupClient>>(groupsClient, HttpStatus.OK);
 
 	}

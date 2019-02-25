@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
-@RequestMapping({"api/inventoryCategory"})
+@RequestMapping({"api/inventorycategory"})
 public class InventoryCategoryRestController {
 
     @Autowired
@@ -40,16 +40,12 @@ public class InventoryCategoryRestController {
         return new ResponseEntity<InventoryCategory>(inventoryCategory, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<InventoryCategory> updateInventoryCategory(@PathVariable("id") final Integer id, @RequestBody final InventoryCategory inventoryCategory){
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<InventoryCategory> updateInventoryCategory(@RequestBody final InventoryCategory inventoryCategory){
 
-        InventoryCategory currentInventoryCategory = inventoryCategoryJpaRepository.findById(id).get();
+        inventoryCategoryJpaRepository.saveAndFlush(inventoryCategory);
 
-        currentInventoryCategory.setName(inventoryCategory.getName());
-
-        inventoryCategoryJpaRepository.saveAndFlush(currentInventoryCategory);
-
-        return new ResponseEntity<InventoryCategory>(currentInventoryCategory,HttpStatus.OK);
+        return new ResponseEntity<InventoryCategory>(inventoryCategory,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
