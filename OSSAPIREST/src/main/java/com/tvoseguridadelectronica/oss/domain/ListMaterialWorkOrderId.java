@@ -2,47 +2,42 @@ package com.tvoseguridadelectronica.oss.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
 public class ListMaterialWorkOrderId implements Serializable {
 
-    @Column(name = "list_work_order_id")
-    private int listWorkOrderId ;
+    @ManyToOne
+    @JoinColumn(name = "list_work_order_id")
+    private ListWorkOrder listWorkOrder ;
 
-    @Column(name = "material_id")
-    private int materialId;
+    @ManyToOne
+    @JoinColumn(name = "material_id")
+    private Material material;
 
     public ListMaterialWorkOrderId() {
     }
 
-    public ListMaterialWorkOrderId(int listWorkOrderId, int materialId) {
-        this.listWorkOrderId = listWorkOrderId;
-        this.materialId = materialId;
+    public ListMaterialWorkOrderId(ListWorkOrder listWorkOrder, Material material) {
+        this.listWorkOrder = listWorkOrder;
+        this.material = material;
     }
 
-    public int getListWorkOrderId() {
-        return listWorkOrderId;
+    public ListWorkOrder getListWorkOrder() {
+        return listWorkOrder;
     }
 
-    public void setListWorkOrderId(int listWorkOrderId) {
-        this.listWorkOrderId = listWorkOrderId;
+    public void setListWorkOrder(ListWorkOrder listWorkOrder) {
+        this.listWorkOrder = listWorkOrder;
     }
 
-    public int getMaterialId() {
-        return materialId;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setMaterialId(int materialId) {
-        this.materialId = materialId;
-    }
-
-    @Override
-    public String toString() {
-        return "ListMaterialWorkOrderId{" +
-                "listWorkOrderId=" + listWorkOrderId +
-                ", materialId=" + materialId +
-                '}';
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 }

@@ -1,25 +1,34 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
-import com.tvoseguridadelectronica.oss.domain.ListDeviceWorkOrderId;
+import com.tvoseguridadelectronica.oss.domain.ListToolWorkOrder;
+import com.tvoseguridadelectronica.oss.domain.ListToolWorkOrderId;
 import com.tvoseguridadelectronica.oss.domain.ListToolWorkOrder;
 import com.tvoseguridadelectronica.oss.domain.ListToolWorkOrderId;
 import com.tvoseguridadelectronica.oss.jparepository.ListToolWorkOrderJpaRepository;
+import com.tvoseguridadelectronica.oss.jparepository.ListToolWorkOrderJpaRepository;
+import com.tvoseguridadelectronica.oss.repository.ListToolWorkOrderDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping({"api/listtoolworkorder"})
 public class ListToolWorkOrderRestController {
+    
+    private ListToolWorkOrderJpaRepository listToolWorkOrderJpaRepository;
+    private ListToolWorkOrderDao listToolWorkOrderDao;
 
     @Autowired
-    private ListToolWorkOrderJpaRepository listToolWorkOrderJpaRepository;
-
+    public void setListTool(ListToolWorkOrderJpaRepository listToolWorkOrderJpaRepository, ListToolWorkOrderDao listToolWorkOrderDao) {
+        this.listToolWorkOrderJpaRepository = listToolWorkOrderJpaRepository;
+        this.listToolWorkOrderDao = listToolWorkOrderDao;
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<ListToolWorkOrder>> listAllListToolWorkOrders() {
@@ -32,17 +41,24 @@ public class ListToolWorkOrderRestController {
     public ResponseEntity<ListToolWorkOrder> getListToolWorkOrderById(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
 
         ListToolWorkOrderId id = new ListToolWorkOrderId( );
-        id.setToolId(toolId);
-        id.setListWorkOrderId(listWorkOrderId);
+        id.getTool().setId(toolId);
+        id.getListWorkOrder().setId(listWorkOrderId);
 
         ListToolWorkOrder ListToolWorkOrder = listToolWorkOrderJpaRepository.findById(id).get();
         return new ResponseEntity<ListToolWorkOrder>(ListToolWorkOrder, HttpStatus.OK);
     }
 
+    @GetMapping("/findByIdList/{id}")
+    public ResponseEntity<List<ListToolWorkOrder>> getListToolByIdListWorkOrder(@PathVariable("id") final int id) throws SQLException {
+
+        List<ListToolWorkOrder> listToolWorkOrders = listToolWorkOrderDao.findByIdList(id);
+
+        return new ResponseEntity<List<ListToolWorkOrder>>(listToolWorkOrders, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ListToolWorkOrder> createListToolWorkOrder(@RequestBody final ListToolWorkOrder listToolWorkOrder) {
 
-        System.out.println(listToolWorkOrder.getQuantity()+"   "+listToolWorkOrder.getId().getToolId()+"  "+listToolWorkOrder.getId().getListWorkOrderId());
         listToolWorkOrderJpaRepository.save(listToolWorkOrder);
         return new ResponseEntity<ListToolWorkOrder>(listToolWorkOrder, HttpStatus.CREATED);
     }
@@ -51,8 +67,8 @@ public class ListToolWorkOrderRestController {
     public ResponseEntity<ListToolWorkOrder> updateListToolWorkOrder(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId, @RequestBody final ListToolWorkOrder listToolWorkOrder){
 
         ListToolWorkOrderId id = new ListToolWorkOrderId( );
-        id.setToolId(toolId);
-        id.setListWorkOrderId(listWorkOrderId);
+        id.getTool().setId(toolId);
+        id.getListWorkOrder().setId(listWorkOrderId);
 
         ListToolWorkOrder currentListToolWorkOrder =  listToolWorkOrderJpaRepository.findById(id).get();
 
@@ -67,8 +83,8 @@ public class ListToolWorkOrderRestController {
     public ResponseEntity<ListToolWorkOrder> deleteListToolWorkOrder(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
 
         ListToolWorkOrderId id = new ListToolWorkOrderId( );
-        id.setToolId(toolId);
-        id.setListWorkOrderId(listWorkOrderId);
+        id.getTool().setId(toolId);
+        id.getListWorkOrder().setId(listWorkOrderId);
 
         listToolWorkOrderJpaRepository.deleteById(id);
 
