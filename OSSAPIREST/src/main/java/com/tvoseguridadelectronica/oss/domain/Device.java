@@ -63,7 +63,12 @@ public class Device implements Serializable {
     }
 
     public Device() {
+        this.model = new Model();
+        this.inventoryCategory = new InventoryCategory();
+        this.measurementUnit = new MeasurementUnit();
+        this.deviceState = new DeviceState();
     }
+
 
     public int getId() {
         return id;

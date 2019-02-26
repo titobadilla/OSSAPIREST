@@ -34,18 +34,11 @@ public class ToolRestController {
         return new ResponseEntity<Tool>(tool, HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tool> editTool(@PathVariable("id") final Integer id,@RequestBody final Tool tool) {
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Tool> editTool(@RequestBody final Tool tool) {
 
-        Tool tool2 = toolJpaRepository.findById(id).get();
-
-        tool2.setName(tool.getName());
-        tool2.setDescription(tool.getDescription());
-        tool2.setInventoryCategory(tool.getInventoryCategory());
-        tool2.setMeasurementUnit(tool.getMeasurementUnit());
-
-        toolJpaRepository.saveAndFlush(tool2);
-        return new ResponseEntity<Tool>(tool2, HttpStatus.OK);
+        toolJpaRepository.saveAndFlush(tool);
+        return new ResponseEntity<Tool>(tool, HttpStatus.OK);
     }
 
     @PutMapping(value = "updateQuantity/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
