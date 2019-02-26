@@ -9,41 +9,35 @@ import java.io.Serializable;
 @Embeddable
 public class ListDeviceWorkOrderId implements Serializable {
 
-    @Column(name = "list_work_order_id")
-    private int listWorkOrderId ;
+    @ManyToOne
+    @JoinColumn(name = "list_work_order_id")
+    private ListWorkOrder listWorkOrder ;
 
-    @Column(name = "id_device")
-    private int deviceId;
+    @ManyToOne
+    @JoinColumn(name = "id_device")
+    private Device device;
 
     public ListDeviceWorkOrderId() {
     }
 
-    public ListDeviceWorkOrderId(int listWorkOrderId, int deviceId) {
-        this.listWorkOrderId = listWorkOrderId;
-        this.deviceId = deviceId;
+    public ListDeviceWorkOrderId(ListWorkOrder listWorkOrder, Device device) {
+        this.listWorkOrder = listWorkOrder;
+        this.device = device;
     }
 
-    public int getListWorkOrderId() {
-        return listWorkOrderId;
+    public ListWorkOrder getListWorkOrder() {
+        return listWorkOrder;
     }
 
-    public void setListWorkOrderId(int listWorkOrderId) {
-        this.listWorkOrderId = listWorkOrderId;
+    public void setListWorkOrder(ListWorkOrder listWorkOrder) {
+        this.listWorkOrder = listWorkOrder;
     }
 
-    public int getDeviceId() {
-        return deviceId;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setDeviceId(int deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    @Override
-    public String toString() {
-        return "ListDeviceWorkOrderId{" +
-                "listWorkOrderId=" + listWorkOrderId +
-                ", deviceId=" + deviceId +
-                '}';
+    public void setDeviceId(Device device) {
+        this.device = device;
     }
 }
