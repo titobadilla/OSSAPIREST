@@ -36,15 +36,15 @@ public class CantonRestController {
 	    }
 
 	    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<Canton> createCanton(@RequestBody final Canton deviceState) {
-	    	cantonJpaRepository.save(deviceState);
-	        return new ResponseEntity<Canton>(deviceState, HttpStatus.NO_CONTENT);
+	    public ResponseEntity<Canton> createCanton(@RequestBody final Canton canton) {
+	    	cantonJpaRepository.save(canton);
+	        return new ResponseEntity<Canton>(canton, HttpStatus.NO_CONTENT);
 	    }
 
 	    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<Canton> editCanton(@RequestBody final Canton deviceState) {
-	    	cantonJpaRepository.saveAndFlush(deviceState);
-	        return new ResponseEntity<Canton>(deviceState, HttpStatus.OK);
+	    public ResponseEntity<Canton> editCanton(@RequestBody final Canton canton) {
+	    	cantonJpaRepository.saveAndFlush(canton);
+	        return new ResponseEntity<Canton>(canton, HttpStatus.OK);
 	    }
 
 	    @GetMapping("/{id}")
@@ -52,6 +52,14 @@ public class CantonRestController {
 	    	Canton canton = cantonJpaRepository.findById(id).get();
 	        return new ResponseEntity<Canton>(canton, HttpStatus.OK);
 	    }
+	    
+	    @GetMapping("/cantonsbyprovince/{id}")
+	    public ResponseEntity<List<Canton>> findCantonByProvince(@PathVariable("id") final String id ) {
+	    	
+	    	List<Canton> canton = cantonJpaRepository.findByCantonIdProvinceId(id);
+	        return new ResponseEntity<List<Canton>>(canton, HttpStatus.OK);
+	    }
+
 
 	    @DeleteMapping("/{id}")
 	    public ResponseEntity<Canton> deleteCanton(@PathVariable("id") final CantonId id) {

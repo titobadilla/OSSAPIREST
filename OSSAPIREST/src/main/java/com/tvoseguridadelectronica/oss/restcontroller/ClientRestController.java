@@ -18,8 +18,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.tvoseguridadelectronica.oss.domain.AddressDescription;
 import com.tvoseguridadelectronica.oss.domain.Client;
+import com.tvoseguridadelectronica.oss.domain.Employee;
+import com.tvoseguridadelectronica.oss.domain.TelephoneClient;
+import com.tvoseguridadelectronica.oss.domain.TelephoneEmployee;
+import com.tvoseguridadelectronica.oss.jparepository.AddressDescriptionJpaRepository;
 import com.tvoseguridadelectronica.oss.jparepository.ClientJpaRepository;
+import com.tvoseguridadelectronica.oss.jparepository.TelephoneClientJpaRepository;
 
 @CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
@@ -28,6 +35,14 @@ public class ClientRestController {
 	
 	@Autowired
 	private ClientJpaRepository clientJpaRepository;
+	
+	@Autowired
+	private TelephoneClientJpaRepository telephoneClientJpaRepository;
+	
+	@Autowired
+	private AddressDescriptionJpaRepository AddressDescriptionJpaRepository; 
+
+
 	
 	@GetMapping("/")
 	public ResponseEntity<List<Client>> listAllClients() {
@@ -47,16 +62,55 @@ public class ClientRestController {
 	
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Client> createClient(@RequestBody final Client client) {
-
+		
+		AddressDescription savedAD = AddressDescriptionJpaRepository.save(client.getAddressDescription());
+		if(savedAD!=null){
+		client.setAddressDescription(savedAD);
 		clientJpaRepository.save(client);
+		this.loadClientWithTelephones(client);
+		}else{
+			return new ResponseEntity<Client>(client, HttpStatus.CONFLICT);
+		}
 		return new ResponseEntity<Client>(client, HttpStatus.NO_CONTENT);
 
+		
+	}
+	
+	private void loadClientWithTelephones(Client clientUpdate) {
+		List<TelephoneClient> telephones = clientUpdate.getTelephones();
+		for (TelephoneClient telephoneClientElement : telephones) {
+			this.telephoneClientJpaRepository.save(telephoneClientElement);
+		}
+	}
+	
+	private void updateTelephonesClient(Client clientUpdate) {
+		
+		List<TelephoneClient> telephones = clientUpdate.getTelephones();
+		
+		if(telephones.size()>1){
+			if(telephones.get(1).getNumber().equalsIgnoreCase("")){
+				this.telephoneClientJpaRepository.delete(telephones.get(1));
+				telephones.remove(1);
+			}
+		}
+		
+		for (TelephoneClient telephoneClientElement : telephones) {
+			this.telephoneClientJpaRepository.saveAndFlush(telephoneClientElement);
+		}
 	}
 	
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Client> editClient(@RequestBody final Client client) {
-
-		clientJpaRepository.saveAndFlush(client);
+		
+		AddressDescription updateAD = AddressDescriptionJpaRepository.saveAndFlush(client.getAddressDescription());
+				
+		if(updateAD!=null){
+			this.updateTelephonesClient(client);
+			clientJpaRepository.saveAndFlush(client);
+		}else{
+			return new ResponseEntity<Client>(client, HttpStatus.CONFLICT);
+		}
+		
 		return new ResponseEntity<Client>(client, HttpStatus.OK);
 
 	}
