@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "model")
+@Table(name = "Model")
 public class Model implements Serializable{
 
 	private static final long serialVersionUID = 1L;
