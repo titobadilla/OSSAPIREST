@@ -12,14 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Group_client")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idGroup")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idGroup")
+
 public class GroupClient implements Serializable{
 	
 	/**
@@ -51,7 +56,7 @@ public class GroupClient implements Serializable{
 	private String phone2;
 	
 	@OneToMany(mappedBy = "group")
-	//@JsonManagedReference
+	@JsonIgnoreProperties({ "group" })	
 	private List<Client> clients;
 
 	public GroupClient() {
