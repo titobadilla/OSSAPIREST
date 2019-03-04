@@ -7,22 +7,22 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "List_work_order_device")
-public class ListDeviceWorkOrder implements Serializable {
+public class SuppliesDevice implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private ListDeviceWorkOrderId id;
+    private SuppliesDeviceId id;
 
     @Column(name = "quantity")
     private int quantity;
 
-    public ListDeviceWorkOrder( int quantity) {
+    public SuppliesDevice( int quantity) {
         this.quantity = quantity;
     }
 
-    public ListDeviceWorkOrder() {
-        this.id = new ListDeviceWorkOrderId();
+    public SuppliesDevice() {
+        this.id = new SuppliesDeviceId();
     }
 
     public int getQuantity() {
@@ -31,11 +31,11 @@ public class ListDeviceWorkOrder implements Serializable {
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public ListDeviceWorkOrderId getId() {
+    public SuppliesDeviceId getId() {
         return id;
     }
 
-    public void setId(ListDeviceWorkOrderId id) {
+    public void setId(SuppliesDeviceId id) {
         this.id = id;
     }
 }

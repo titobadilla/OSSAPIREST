@@ -1,15 +1,11 @@
 package com.tvoseguridadelectronica.oss.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tvoseguridadelectronica.oss.utilities.FormatDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +51,7 @@ public class WorkOrder implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "list_work_order_id")
-	ListWorkOrder listWorkOrder;
+    KitWorkOrder listWorkOrder;
 
 	@OneToOne(mappedBy="workOrder")
 	@JsonBackReference
@@ -65,11 +61,11 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "work_order_type_id")
 	WorkOrderType workOrderType;
 
-	public WorkOrder(String description,Timestamp startDate,Timestamp endDate,Color color ,Client client, List<Employee> employees, ListWorkOrder listWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
+	public WorkOrder(String description, Timestamp startDate, Timestamp endDate, Color color , Client client, List<Employee> employees, KitWorkOrder kitWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
 		this.description = description;
 		this.client = client;
 		this.employees = employees;
-		this.listWorkOrder = listWorkOrder;
+		this.listWorkOrder = kitWorkOrder;
 		this.workOrderDetail = workOrderDetail;
 		this.workOrderType = workOrderType;
 		this.startDate=startDate;
@@ -80,7 +76,7 @@ public class WorkOrder implements Serializable{
 	public WorkOrder() {
 		this.client=new Client();
 		this.employees=new ArrayList<>();
-		this.listWorkOrder=new ListWorkOrder();
+		this.listWorkOrder=new KitWorkOrder();
 		this.workOrderType=new WorkOrderType();
 		this.color=new Color();
 		
@@ -119,12 +115,12 @@ public class WorkOrder implements Serializable{
 		this.employees = employees;
 	}
 
-	public ListWorkOrder getListWorkOrder() {
+	public KitWorkOrder getListWorkOrder() {
 		return listWorkOrder;
 	}
 
-	public void setListWorkOrder(ListWorkOrder listWorkOrder) {
-		this.listWorkOrder = listWorkOrder;
+	public void setListWorkOrder(KitWorkOrder kitWorkOrder) {
+		this.listWorkOrder = kitWorkOrder;
 	}
 
 	public WorkOrderDetail getWorkOrderDetail() {

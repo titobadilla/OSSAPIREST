@@ -1,6 +1,6 @@
 package com.tvoseguridadelectronica.oss.repository;
 
-import com.tvoseguridadelectronica.oss.domain.ListDeviceWorkOrder;
+import com.tvoseguridadelectronica.oss.domain.SuppliesDevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class ListDeviceWorkOrderDao {
+public class SuppliesDeviceDao {
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall simpleJdbcCall;
@@ -24,12 +24,12 @@ public class ListDeviceWorkOrderDao {
         this.simpleJdbcCall = new SimpleJdbcCall(dataSource);
     }
 
-    class ListDeviceRowMapper implements RowMapper<ListDeviceWorkOrder> {
+    class ListDeviceRowMapper implements RowMapper<SuppliesDevice> {
 
         @Override
-        public ListDeviceWorkOrder mapRow(ResultSet rs, int i) throws SQLException {
+        public SuppliesDevice mapRow(ResultSet rs, int i) throws SQLException {
 
-            ListDeviceWorkOrder listDevice = new ListDeviceWorkOrder();
+            SuppliesDevice listDevice = new SuppliesDevice();
             listDevice.getId().getListWorkOrder().setId(rs.getInt("list_work_order_id"));
             listDevice.getId().getDevice().setId(rs.getInt("Device_id"));
             listDevice.setQuantity(rs.getInt("quantity"));
@@ -38,13 +38,13 @@ public class ListDeviceWorkOrderDao {
         }
     }
 
-    public List<ListDeviceWorkOrder> findByIdList(int listId){
+    public List<SuppliesDevice> findByIdList(int listId){
 
         String sqlProcedure = "{call OSS_List_Work_Order_Device (?)}";
 
-        List<ListDeviceWorkOrder> listDeviceWorkOrders = this.jdbcTemplate.query(sqlProcedure, new ListDeviceRowMapper(),listId);
+        List<SuppliesDevice> SuppliesDevices = this.jdbcTemplate.query(sqlProcedure, new ListDeviceRowMapper(),listId);
 
-        return listDeviceWorkOrders;
+        return SuppliesDevices;
 
     }
 

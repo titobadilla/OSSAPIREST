@@ -1,6 +1,6 @@
 package com.tvoseguridadelectronica.oss.repository;
 
-import com.tvoseguridadelectronica.oss.domain.ListToolWorkOrder;
+import com.tvoseguridadelectronica.oss.domain.SuppliesTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class ListToolWorkOrderDao {
+public class SuppliesToolDao {
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall simpleJdbcCall;
@@ -24,12 +24,12 @@ public class ListToolWorkOrderDao {
         this.simpleJdbcCall = new SimpleJdbcCall(dataSource);
     }
 
-    class ListToolRowMapper implements RowMapper<ListToolWorkOrder> {
+    class ListToolRowMapper implements RowMapper<SuppliesTools> {
 
         @Override
-        public ListToolWorkOrder mapRow(ResultSet rs, int i) throws SQLException {
+        public SuppliesTools mapRow(ResultSet rs, int i) throws SQLException {
 
-            ListToolWorkOrder listTool = new ListToolWorkOrder();
+            SuppliesTools listTool = new SuppliesTools();
             listTool.getId().getListWorkOrder().setId(rs.getInt("list_work_order_id"));
             listTool.getId().getTool().setId(rs.getInt("Tool_id"));
             listTool.setQuantity(rs.getInt("quantity"));
@@ -38,13 +38,13 @@ public class ListToolWorkOrderDao {
         }
     }
 
-    public List<ListToolWorkOrder> findByIdList(int listId){
+    public List<SuppliesTools> findByIdList(int listId){
 
         String sqlProcedure = "{call OSS_List_Work_Order_Tool (?)}";
 
-        List<ListToolWorkOrder> listToolWorkOrders = this.jdbcTemplate.query(sqlProcedure, new ListToolRowMapper(),listId);
+        List<SuppliesTools> suppliesTools = this.jdbcTemplate.query(sqlProcedure, new ListToolRowMapper(),listId);
 
-        return listToolWorkOrders;
+        return suppliesTools;
 
     }
     

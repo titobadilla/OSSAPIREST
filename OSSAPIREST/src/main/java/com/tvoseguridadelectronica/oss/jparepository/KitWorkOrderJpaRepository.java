@@ -1,9 +1,9 @@
 package com.tvoseguridadelectronica.oss.jparepository;
 
-import com.tvoseguridadelectronica.oss.domain.ListWorkOrder;
+import com.tvoseguridadelectronica.oss.domain.KitWorkOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ListWorkOrderJpaRepository extends JpaRepository <ListWorkOrder,Integer> {
+public interface KitWorkOrderJpaRepository extends JpaRepository <KitWorkOrder,Integer> {
 }

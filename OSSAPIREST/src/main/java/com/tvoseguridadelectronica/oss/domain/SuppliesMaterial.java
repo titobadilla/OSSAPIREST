@@ -1,35 +1,33 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "List_work_order_material")
-public class ListMaterialWorkOrder implements Serializable {
+public class SuppliesMaterial implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private ListMaterialWorkOrderId id;
+    private SuppliesMaterialId id;
 
     @Column(name = "quantity")
     private int quantity;
 
-    public ListMaterialWorkOrder(int quantity) {
+    public SuppliesMaterial(int quantity) {
         this.quantity = quantity;
     }
 
-    public ListMaterialWorkOrder() {
-        this.id = new ListMaterialWorkOrderId();
+    public SuppliesMaterial() {
+        this.id = new SuppliesMaterialId();
     }
 
-    public ListMaterialWorkOrderId getId() {
+    public SuppliesMaterialId getId() {
         return id;
     }
 
-    public void setId(ListMaterialWorkOrderId id) {
+    public void setId(SuppliesMaterialId id) {
         this.id = id;
     }
 
