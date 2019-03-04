@@ -22,9 +22,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Group_client")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idGroup")
-
 public class GroupClient implements Serializable{
 	
 	/**

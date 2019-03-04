@@ -22,9 +22,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Client")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-
 public class Client implements Serializable{
 	
 	/**
@@ -51,7 +48,6 @@ public class Client implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name="address_description_id")
-	//@JsonManagedReference
 	private AddressDescription addressDescription;
 	
 	@ManyToOne

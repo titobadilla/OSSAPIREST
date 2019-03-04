@@ -38,4 +38,11 @@ public class ListDeviceWorkOrder implements Serializable {
     public void setId(ListDeviceWorkOrderId id) {
         this.id = id;
     }
+
+	@Override
+	public String toString() {
+		return "ListDeviceWorkOrder [id=" + id + ", quantity=" + quantity + "]";
+	}
+    
+    
 }

@@ -14,20 +14,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-//@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
-
 @CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping({"api/listdeviceworkorder"})
 public class ListDeviceWorkOrderRestController {
 
     private ListDeviceWorkOrderJpaRepository listDeviceWorkOrderJpaRepository;
-    private ListDeviceWorkOrderDao listDeviceWorkOrderDao;
 
     @Autowired
-    public void setListDevice(ListDeviceWorkOrderJpaRepository listDeviceWorkOrderJpaRepository, ListDeviceWorkOrderDao listDeviceWorkOrderDao) {
+    public void setListDevice(ListDeviceWorkOrderJpaRepository listDeviceWorkOrderJpaRepository) {
         this.listDeviceWorkOrderJpaRepository = listDeviceWorkOrderJpaRepository;
-        this.listDeviceWorkOrderDao = listDeviceWorkOrderDao;
     }
     
     @GetMapping("/")
@@ -51,7 +47,7 @@ public class ListDeviceWorkOrderRestController {
     @GetMapping("/findByIdList/{id}")
     public ResponseEntity<List<ListDeviceWorkOrder>> getListDeviceByIdListWorkOrder(@PathVariable("id") final int id) throws SQLException {
 
-        List<ListDeviceWorkOrder> listDeviceWorkOrders = listDeviceWorkOrderDao.findByIdList(id);
+        List<ListDeviceWorkOrder> listDeviceWorkOrders = listDeviceWorkOrderJpaRepository.findByIdListWorkOrderId(id);
 
         return new ResponseEntity<List<ListDeviceWorkOrder>>(listDeviceWorkOrders, HttpStatus.OK);
     }

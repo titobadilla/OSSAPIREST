@@ -1,6 +1,5 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,9 +14,9 @@ public class ListMaterialWorkOrder implements Serializable {
     private ListMaterialWorkOrderId id;
 
     @Column(name = "quantity")
-    private int quantity;
+    private float quantity;
 
-    public ListMaterialWorkOrder(int quantity) {
+    public ListMaterialWorkOrder(float quantity) {
         this.quantity = quantity;
     }
 
@@ -33,11 +32,11 @@ public class ListMaterialWorkOrder implements Serializable {
         this.id = id;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 }
