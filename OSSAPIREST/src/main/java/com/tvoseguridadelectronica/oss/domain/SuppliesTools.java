@@ -1,28 +1,26 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "List_work_order_tool")
-public class ListToolWorkOrder implements Serializable {
+public class SuppliesTools implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private ListToolWorkOrderId id;
+    private SuppliesToolId id;
 
     @Column(name = "quantity")
     private int quantity;
 
-    public ListToolWorkOrder(int quantity) {
+    public SuppliesTools(int quantity) {
         this.quantity = quantity;
     }
 
-    public ListToolWorkOrder() {
-        this.id = new ListToolWorkOrderId();
+    public SuppliesTools() {
+        this.id = new SuppliesToolId();
     }
 
     public int getQuantity() {
@@ -33,11 +31,11 @@ public class ListToolWorkOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public ListToolWorkOrderId getId() {
+    public SuppliesToolId getId() {
         return id;
     }
 
-    public void setId(ListToolWorkOrderId id) {
+    public void setId(SuppliesToolId id) {
         this.id = id;
     }
 }

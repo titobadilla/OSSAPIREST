@@ -1,16 +1,13 @@
 package com.tvoseguridadelectronica.oss.repository;
 
-import com.tvoseguridadelectronica.oss.domain.ListMaterialWorkOrder;
-import com.tvoseguridadelectronica.oss.domain.ListWorkOrder;
+import com.tvoseguridadelectronica.oss.domain.SuppliesMaterial;
+import com.tvoseguridadelectronica.oss.domain.KitWorkOrder;
 import com.tvoseguridadelectronica.oss.domain.Material;
-import com.tvoseguridadelectronica.oss.jparepository.ListWorkOrderJpaRepository;
+import com.tvoseguridadelectronica.oss.jparepository.KitWorkOrderJpaRepository;
 import com.tvoseguridadelectronica.oss.jparepository.MaterialJpaRepository;
-import com.tvoseguridadelectronica.oss.restcontroller.ListWorkOrderRestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
@@ -20,12 +17,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class ListMaterialWorkOrderDao {
+public class SuppliesMaterialDao {
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall simpleJdbcCall;
 
-    ListWorkOrderJpaRepository listWorkOrderJpaRepository;
+    KitWorkOrderJpaRepository kitWorkOrderJpaRepository;
     MaterialJpaRepository materialJpaRepository;
 
     @Autowired
@@ -34,15 +31,15 @@ public class ListMaterialWorkOrderDao {
         this.simpleJdbcCall = new SimpleJdbcCall(dataSource);
     }
 
-    class ListMaterialRowMapper implements RowMapper<ListMaterialWorkOrder> {
+    class ListMaterialRowMapper implements RowMapper<SuppliesMaterial> {
 
         @Override
-        public ListMaterialWorkOrder mapRow(ResultSet rs, int i) throws SQLException {
+        public SuppliesMaterial mapRow(ResultSet rs, int i) throws SQLException {
 
-            ListMaterialWorkOrder listMaterial = new ListMaterialWorkOrder();
+            SuppliesMaterial listMaterial = new SuppliesMaterial();
 
-            ListWorkOrder listWorkOrder = listWorkOrderJpaRepository.findById(rs.getInt("list_work_order_id")).get();
-            listMaterial.getId().setListWorkOrder(listWorkOrder);
+            KitWorkOrder kitWorkOrder = kitWorkOrderJpaRepository.findById(rs.getInt("list_work_order_id")).get();
+            listMaterial.getId().setListWorkOrder(kitWorkOrder);
 
             Material material = materialJpaRepository.findById(rs.getInt("material_id")).get();
             listMaterial.getId().setMaterial(material);
@@ -53,7 +50,7 @@ public class ListMaterialWorkOrderDao {
         }
     }
 
-    public List<ListMaterialWorkOrder> findByIdList(int listId){
+    public List<SuppliesMaterial> findByIdList(int listId){
 
         System.out.println("metodod "+listId);
 

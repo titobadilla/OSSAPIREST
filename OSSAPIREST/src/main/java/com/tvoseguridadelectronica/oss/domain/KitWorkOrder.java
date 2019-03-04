@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "List_work_order")
-public class ListWorkOrder implements Serializable {
+public class KitWorkOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,11 +23,11 @@ public class ListWorkOrder implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-	public ListWorkOrder(String name) {
+	public KitWorkOrder(String name) {
 		this.name = name;
 	}
 
-	public ListWorkOrder() {
+	public KitWorkOrder() {
 	}
 
 	public int getId() {
@@ -48,7 +48,7 @@ public class ListWorkOrder implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ListWorkOrder [id=" + id + ", name=" + name + "]";
+		return "KitWorkOrder [id=" + id + ", name=" + name + "]";
 	}
 	
 	

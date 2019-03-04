@@ -1,6 +1,5 @@
 package com.tvoseguridadelectronica.oss.repository;
 
-import com.tvoseguridadelectronica.oss.domain.ListDeviceWorkOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -10,7 +9,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class ListWorkOrderDao {
+public class KitWorkOrderDao {
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall simpleJdbcCall;

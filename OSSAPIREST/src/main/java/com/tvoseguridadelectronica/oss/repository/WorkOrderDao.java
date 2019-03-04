@@ -4,13 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import com.tvoseguridadelectronica.oss.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,17 +18,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.tvoseguridadelectronica.oss.domain.AddressDescription;
-import com.tvoseguridadelectronica.oss.domain.Canton;
-import com.tvoseguridadelectronica.oss.domain.CantonId;
-import com.tvoseguridadelectronica.oss.domain.Client;
-import com.tvoseguridadelectronica.oss.domain.Color;
-import com.tvoseguridadelectronica.oss.domain.District;
-import com.tvoseguridadelectronica.oss.domain.DistrictId;
-import com.tvoseguridadelectronica.oss.domain.ListWorkOrder;
-import com.tvoseguridadelectronica.oss.domain.Province;
-import com.tvoseguridadelectronica.oss.domain.WorkOrder;
-import com.tvoseguridadelectronica.oss.domain.WorkOrderType;
+import com.tvoseguridadelectronica.oss.domain.KitWorkOrder;
 
 
 @Repository
@@ -107,9 +97,9 @@ public class WorkOrderDao {
 								,rs.getString("district_name"))));
 						workOrder.setClient(client);
 						workOrder.setWorkOrderType(new WorkOrderType(rs.getInt("work_order_type_id"),rs.getString("name")));
-						ListWorkOrder listWorkOrder=new ListWorkOrder();
-						listWorkOrder.setId(rs.getInt("list_work_order_id"));
-						workOrder.setListWorkOrder(listWorkOrder);						
+						KitWorkOrder kitWorkOrder =new KitWorkOrder();
+						kitWorkOrder.setId(rs.getInt("list_work_order_id"));
+						workOrder.setListWorkOrder(kitWorkOrder);
 						map.put(id, workOrder);
 
 					} // End if
