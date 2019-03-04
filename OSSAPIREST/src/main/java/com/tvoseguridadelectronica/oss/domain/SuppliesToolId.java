@@ -11,7 +11,7 @@ public class SuppliesToolId implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
-    @JoinColumn(name = "list_work_order_id")
+    @JoinColumn(name = "kit_work_order_id")
     private KitWorkOrder listWorkOrder ;
 
     @ManyToOne

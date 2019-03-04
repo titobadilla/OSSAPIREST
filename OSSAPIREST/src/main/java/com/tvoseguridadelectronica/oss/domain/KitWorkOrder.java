@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "List_work_order")
+@Table(name = "Kit_work_order")
 public class KitWorkOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;

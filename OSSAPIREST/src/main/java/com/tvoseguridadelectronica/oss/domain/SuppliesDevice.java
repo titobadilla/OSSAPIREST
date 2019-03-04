@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "List_work_order_device")
+@Table(name = "Supplies_device")
 public class SuppliesDevice implements Serializable {
 
     private static final long serialVersionUID = 1L;

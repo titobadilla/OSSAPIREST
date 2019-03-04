@@ -1,14 +1,10 @@
 package com.tvoseguridadelectronica.oss.domain;
 
-<<<<<<< HEAD:OSSAPIREST/src/main/java/com/tvoseguridadelectronica/oss/domain/ListMaterialWorkOrder.java
-
-=======
->>>>>>> 1426caa72a9a7bc051b29b258c9bade6b8483f79:OSSAPIREST/src/main/java/com/tvoseguridadelectronica/oss/domain/SuppliesMaterial.java
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "List_work_order_material")
+@Table(name = "Supplies_material")
 public class SuppliesMaterial implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,11 +15,7 @@ public class SuppliesMaterial implements Serializable {
     @Column(name = "quantity")
     private float quantity;
 
-<<<<<<< HEAD:OSSAPIREST/src/main/java/com/tvoseguridadelectronica/oss/domain/ListMaterialWorkOrder.java
-    public ListMaterialWorkOrder(float quantity) {
-=======
-    public SuppliesMaterial(int quantity) {
->>>>>>> 1426caa72a9a7bc051b29b258c9bade6b8483f79:OSSAPIREST/src/main/java/com/tvoseguridadelectronica/oss/domain/SuppliesMaterial.java
+    public SuppliesMaterial(float quantity) {
         this.quantity = quantity;
     }
 

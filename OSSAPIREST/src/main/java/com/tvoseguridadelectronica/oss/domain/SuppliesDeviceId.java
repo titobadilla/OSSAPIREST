@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class SuppliesDeviceId implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "list_work_order_id")
+    @JoinColumn(name = "kit_work_order_id")
     private KitWorkOrder listWorkOrder ;
 
     @ManyToOne
