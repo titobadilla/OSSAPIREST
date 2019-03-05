@@ -10,7 +10,7 @@ public class SuppliesDeviceId implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "kit_work_order_id")
-    private KitWorkOrder listWorkOrder ;
+    private KitWorkOrder kitWorkOrder ;
 
     @ManyToOne
     @JoinColumn(name = "id_device")
@@ -20,16 +20,16 @@ public class SuppliesDeviceId implements Serializable {
     }
 
     public SuppliesDeviceId(KitWorkOrder kitWorkOrder, Device device) {
-        this.listWorkOrder = kitWorkOrder;
+        this.kitWorkOrder = kitWorkOrder;
         this.device = device;
     }
 
-    public KitWorkOrder getListWorkOrder() {
-        return listWorkOrder;
+    public KitWorkOrder getkitWorkOrder() {
+        return kitWorkOrder;
     }
 
-    public void setListWorkOrder(KitWorkOrder kitWorkOrder) {
-        this.listWorkOrder = kitWorkOrder;
+    public void setkitWorkOrder(KitWorkOrder kitWorkOrder) {
+        this.kitWorkOrder = kitWorkOrder;
     }
 
     public Device getDevice() {

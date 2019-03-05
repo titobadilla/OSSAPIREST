@@ -10,7 +10,7 @@ public class SuppliesMaterialId implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "kit_work_order_id")
-    private KitWorkOrder listWorkOrder ;
+    private KitWorkOrder kitWorkOrder ;
 
     @ManyToOne
     @JoinColumn(name = "material_id")
@@ -20,16 +20,16 @@ public class SuppliesMaterialId implements Serializable {
     }
 
     public SuppliesMaterialId(KitWorkOrder kitWorkOrder, Material material) {
-        this.listWorkOrder = kitWorkOrder;
+        this.kitWorkOrder = kitWorkOrder;
         this.material = material;
     }
 
-    public KitWorkOrder getListWorkOrder() {
-        return listWorkOrder;
+    public KitWorkOrder getkitWorkOrder() {
+        return kitWorkOrder;
     }
 
-    public void setListWorkOrder(KitWorkOrder kitWorkOrder) {
-        this.listWorkOrder = kitWorkOrder;
+    public void setkitWorkOrder(KitWorkOrder kitWorkOrder) {
+        this.kitWorkOrder = kitWorkOrder;
     }
 
     public Material getMaterial() {

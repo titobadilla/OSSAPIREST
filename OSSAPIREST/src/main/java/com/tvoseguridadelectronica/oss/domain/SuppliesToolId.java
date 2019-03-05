@@ -12,7 +12,7 @@ public class SuppliesToolId implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "kit_work_order_id")
-    private KitWorkOrder listWorkOrder ;
+    private KitWorkOrder kitWorkOrder ;
 
     @ManyToOne
     @JoinColumn(name = "tool_id")
@@ -22,16 +22,16 @@ public class SuppliesToolId implements Serializable {
     }
 
     public SuppliesToolId(KitWorkOrder kitWorkOrder, Tool tool) {
-        this.listWorkOrder = kitWorkOrder;
+        this.kitWorkOrder = kitWorkOrder;
         this.tool = tool;
     }
 
-    public KitWorkOrder getListWorkOrder() {
-        return listWorkOrder;
+    public KitWorkOrder getkitWorkOrder() {
+        return kitWorkOrder;
     }
 
-    public void setListWorkOrder(KitWorkOrder kitWorkOrder) {
-        this.listWorkOrder = kitWorkOrder;
+    public void setkitWorkOrder(KitWorkOrder kitWorkOrder) {
+        this.kitWorkOrder = kitWorkOrder;
     }
 
     public Tool getTool() {
