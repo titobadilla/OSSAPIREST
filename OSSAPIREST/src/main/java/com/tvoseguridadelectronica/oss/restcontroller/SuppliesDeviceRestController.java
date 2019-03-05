@@ -42,7 +42,7 @@ public class SuppliesDeviceRestController {
 
         SuppliesDeviceId id = new SuppliesDeviceId( );
         id.getDevice().setId(deviceId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
         SuppliesDevice SuppliesDevice = SuppliesDeviceJpaRepository.findById(id).get();
         return new ResponseEntity<SuppliesDevice>(SuppliesDevice, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class SuppliesDeviceRestController {
 
         SuppliesDeviceId id = new SuppliesDeviceId( );
         id.getDevice().setId(deviceId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
         SuppliesDevice currentSuppliesDevice =  SuppliesDeviceJpaRepository.findById(id).get();
 
@@ -84,7 +84,7 @@ public class SuppliesDeviceRestController {
 
         SuppliesDeviceId id = new SuppliesDeviceId( );
         id.getDevice().setId(deviceId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
         SuppliesDeviceJpaRepository.deleteById(id);
 

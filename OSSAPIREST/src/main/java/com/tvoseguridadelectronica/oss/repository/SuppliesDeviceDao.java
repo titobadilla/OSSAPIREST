@@ -30,7 +30,7 @@ public class SuppliesDeviceDao {
         public SuppliesDevice mapRow(ResultSet rs, int i) throws SQLException {
 
             SuppliesDevice listDevice = new SuppliesDevice();
-            listDevice.getId().getListWorkOrder().setId(rs.getInt("list_work_order_id"));
+            listDevice.getId().getkitWorkOrder().setId(rs.getInt("list_work_order_id"));
             listDevice.getId().getDevice().setId(rs.getInt("Device_id"));
             listDevice.setQuantity(rs.getInt("quantity"));
 

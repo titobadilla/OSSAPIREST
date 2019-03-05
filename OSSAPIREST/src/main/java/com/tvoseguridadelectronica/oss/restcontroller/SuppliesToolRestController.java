@@ -1,6 +1,6 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
-import com.tvoseguridadelectronica.oss.domain.SuppliesTools;
+import com.tvoseguridadelectronica.oss.domain.SuppliesTool;
 import com.tvoseguridadelectronica.oss.domain.SuppliesToolId;
 import com.tvoseguridadelectronica.oss.jparepository.SuppliesToolsJpaRepository;
 import com.tvoseguridadelectronica.oss.repository.SuppliesToolDao;
@@ -30,63 +30,63 @@ public class SuppliesToolRestController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<SuppliesTools>> listAllListToolWorkOrders() {
+    public ResponseEntity<List<SuppliesTool>> listAllListToolWorkOrders() {
 
-        List <SuppliesTools> suppliesTools = this.suppliesToolsJpaRepository.findAll();
-        return  new ResponseEntity<List<SuppliesTools>>(suppliesTools, HttpStatus.OK);
+        List <SuppliesTool> suppliesTools = this.suppliesToolsJpaRepository.findAll();
+        return  new ResponseEntity<List<SuppliesTool>>(suppliesTools, HttpStatus.OK);
     }
 
     @GetMapping("/{idTool}/{idListWorkOrder}")
-    public ResponseEntity<SuppliesTools> getListToolWorkOrderById(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
+    public ResponseEntity<SuppliesTool> getListToolWorkOrderById(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
 
         SuppliesToolId id = new SuppliesToolId( );
         id.getTool().setId(toolId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
-        SuppliesTools SuppliesTools = suppliesToolsJpaRepository.findById(id).get();
-        return new ResponseEntity<SuppliesTools>(SuppliesTools, HttpStatus.OK);
+        SuppliesTool SuppliesTools = suppliesToolsJpaRepository.findById(id).get();
+        return new ResponseEntity<SuppliesTool>(SuppliesTools, HttpStatus.OK);
     }
 
     @GetMapping("/findByIdList/{id}")
-    public ResponseEntity<List<SuppliesTools>> getListToolByIdListWorkOrder(@PathVariable("id") final int id) throws SQLException {
+    public ResponseEntity<List<SuppliesTool>> getListToolByIdListWorkOrder(@PathVariable("id") final int id) throws SQLException {
 
-        List<SuppliesTools> suppliesTools = suppliesToolDao.findByIdList(id);
+        List<SuppliesTool> suppliesTools = suppliesToolDao.findByIdList(id);
 
-        return new ResponseEntity<List<SuppliesTools>>(suppliesTools, HttpStatus.OK);
+        return new ResponseEntity<List<SuppliesTool>>(suppliesTools, HttpStatus.OK);
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SuppliesTools> createListToolWorkOrder(@RequestBody final SuppliesTools suppliesTools) {
+    public ResponseEntity<SuppliesTool> createListToolWorkOrder(@RequestBody final SuppliesTool suppliesTools) {
 
         this.suppliesToolsJpaRepository.save(suppliesTools);
-        return new ResponseEntity<SuppliesTools>(suppliesTools, HttpStatus.CREATED);
+        return new ResponseEntity<SuppliesTool>(suppliesTools, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{idTool}/{idListWorkOrder}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SuppliesTools> updateListToolWorkOrder(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId, @RequestBody final SuppliesTools suppliesTools){
+    public ResponseEntity<SuppliesTool> updateListToolWorkOrder(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId, @RequestBody final SuppliesTool suppliesTools){
 
         SuppliesToolId id = new SuppliesToolId( );
         id.getTool().setId(toolId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
-        SuppliesTools currentSuppliesTools =  this.suppliesToolsJpaRepository.findById(id).get();
+        SuppliesTool currentSuppliesTools =  this.suppliesToolsJpaRepository.findById(id).get();
 
         currentSuppliesTools.setQuantity(suppliesTools.getQuantity());
 
         this.suppliesToolsJpaRepository.saveAndFlush(currentSuppliesTools);
 
-        return new ResponseEntity<SuppliesTools>(currentSuppliesTools,HttpStatus.OK);
+        return new ResponseEntity<SuppliesTool>(currentSuppliesTools,HttpStatus.OK);
     }
 
     @DeleteMapping("/{idTool}/{idListWorkOrder}")
-    public ResponseEntity<SuppliesTools> deleteListToolWorkOrder(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
+    public ResponseEntity<SuppliesTool> deleteListToolWorkOrder(@PathVariable("idTool") final int toolId, @PathVariable("idListWorkOrder") final int listWorkOrderId) {
 
         SuppliesToolId id = new SuppliesToolId( );
         id.getTool().setId(toolId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
         suppliesToolsJpaRepository.deleteById(id);
 
-        return new ResponseEntity<SuppliesTools>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<SuppliesTool>(HttpStatus.NO_CONTENT);
     }
 }

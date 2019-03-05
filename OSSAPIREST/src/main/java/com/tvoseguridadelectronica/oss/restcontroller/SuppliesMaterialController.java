@@ -68,7 +68,7 @@ public class SuppliesMaterialController {
 
         SuppliesMaterialId id = new SuppliesMaterialId( );
         id.getMaterial().setId(materialId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
         SuppliesMaterial currentSuppliesMaterial =  suppliesMaterialJpaRepository.findById(id).get();
 
@@ -84,7 +84,7 @@ public class SuppliesMaterialController {
 
         SuppliesMaterialId id = new SuppliesMaterialId( );
         id.getMaterial().setId(materialId);
-        id.getListWorkOrder().setId(listWorkOrderId);
+        id.getkitWorkOrder().setId(listWorkOrderId);
 
         suppliesMaterialJpaRepository.deleteById(id);
 

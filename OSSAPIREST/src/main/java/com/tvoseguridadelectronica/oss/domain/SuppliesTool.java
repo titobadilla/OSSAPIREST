@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Supplies_tool")
-public class SuppliesTools implements Serializable {
+public class SuppliesTool implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,11 +15,11 @@ public class SuppliesTools implements Serializable {
     @Column(name = "quantity")
     private int quantity;
 
-    public SuppliesTools(int quantity) {
+    public SuppliesTool(int quantity) {
         this.quantity = quantity;
     }
 
-    public SuppliesTools() {
+    public SuppliesTool() {
         this.id = new SuppliesToolId();
     }
 

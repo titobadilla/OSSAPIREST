@@ -39,7 +39,7 @@ public class SuppliesMaterialDao {
             SuppliesMaterial listMaterial = new SuppliesMaterial();
 
             KitWorkOrder kitWorkOrder = kitWorkOrderJpaRepository.findById(rs.getInt("list_work_order_id")).get();
-            listMaterial.getId().setListWorkOrder(kitWorkOrder);
+            listMaterial.getId().setkitWorkOrder(kitWorkOrder);
 
             Material material = materialJpaRepository.findById(rs.getInt("material_id")).get();
             listMaterial.getId().setMaterial(material);
