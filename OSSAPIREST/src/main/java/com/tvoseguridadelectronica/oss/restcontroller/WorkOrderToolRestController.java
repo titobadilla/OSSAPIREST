@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tvoseguridadelectronica.oss.domain.Device;
+import com.tvoseguridadelectronica.oss.domain.Tool;
+import com.tvoseguridadelectronica.oss.domain.WorkOrder;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderDevice;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderDeviceId;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderTool;
@@ -58,14 +60,25 @@ public class WorkOrderToolRestController {
     @GetMapping("/{idWorkOrder}/{idTool}")
     public ResponseEntity<WorkOrderTool> findWorkOrderToolById(@PathVariable("idWorkOrder") final int idWorkOrder,
     		@PathVariable("idTool") final int idTool) {
+    	Tool tool=new Tool();
+    	tool.setId(idTool);
+    	WorkOrder workOrder=new WorkOrder();
+    	workOrder.setId(idWorkOrder);
     	
-    	WorkOrderTool workOrderTool = workOrderToolJpaRepository.findById(new WorkOrderToolId(idWorkOrder,idTool)).get();
+    	WorkOrderTool workOrderTool = workOrderToolJpaRepository.findById(new WorkOrderToolId(workOrder,tool)).get();
         return new ResponseEntity<WorkOrderTool>(workOrderTool, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idWorkOrder}/{idTool}")
     public ResponseEntity<WorkOrderTool> deleteWorkOrderTool(@PathVariable("idWorkOrder") final int idWorkOrder,
     		@PathVariable("idTool") final int idTool) {
-    	workOrderToolJpaRepository.deleteById(new WorkOrderToolId(idWorkOrder,idTool));
+    	Tool tool=new Tool();
+    	tool.setId(idTool);
+    	WorkOrder workOrder=new WorkOrder();
+    	workOrder.setId(idWorkOrder);
+    	
+    	workOrderToolJpaRepository.deleteById(new WorkOrderToolId(workOrder,tool));
         return new ResponseEntity<WorkOrderTool>(HttpStatus.NO_CONTENT);
     }
+    
+}

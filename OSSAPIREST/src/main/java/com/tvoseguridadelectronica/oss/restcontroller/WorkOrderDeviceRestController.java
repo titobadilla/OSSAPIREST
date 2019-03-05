@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tvoseguridadelectronica.oss.domain.Device;
+import com.tvoseguridadelectronica.oss.domain.WorkOrder;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderDevice;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderDeviceId;
 import com.tvoseguridadelectronica.oss.jparepository.DeviceJpaRepository;
@@ -55,15 +56,24 @@ public class WorkOrderDeviceRestController {
     @GetMapping("/{idWorkOrder}/{idDevice}")
     public ResponseEntity<WorkOrderDevice> findWorkOrderDeviceById(@PathVariable("idWorkOrder") final int idWorkOrder,
     		@PathVariable("idDevice") final int idDevice ) {
+    	Device device=new Device();
+    	device.setId(idDevice);
+    	WorkOrder workOrder=new WorkOrder();
+    	workOrder.setId(idWorkOrder);
     	
-    	WorkOrderDevice workOrderDevice = workOrderDeviceJpaRepository.findById(new WorkOrderDeviceId(idWorkOrder,idDevice)).get();
+    	
+    	WorkOrderDevice workOrderDevice = workOrderDeviceJpaRepository.findById(new WorkOrderDeviceId(workOrder,device)).get();
         return new ResponseEntity<WorkOrderDevice>(workOrderDevice, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idWorkOrder}/{idDevice}")
     public ResponseEntity<WorkOrderDevice> deleteWorkOrderDevice(@PathVariable("idWorkOrder") final int idWorkOrder,
     		@PathVariable("idDevice") final int idDevice) {
-    	workOrderDeviceJpaRepository.deleteById(new WorkOrderDeviceId(idWorkOrder,idDevice));
+    	Device device=new Device();
+    	device.setId(idDevice);
+    	WorkOrder workOrder=new WorkOrder();
+    	workOrder.setId(idWorkOrder);
+    	workOrderDeviceJpaRepository.deleteById(new WorkOrderDeviceId(workOrder,device));
         return new ResponseEntity<WorkOrderDevice>(HttpStatus.NO_CONTENT);
     }
 
