@@ -42,7 +42,7 @@ public class ClientRestController {
 	@Autowired
 	private AddressDescriptionJpaRepository AddressDescriptionJpaRepository; 
 
-
+	int idGroupDefault = 5;
 	
 	@GetMapping("/")
 	public ResponseEntity<List<Client>> listAllClients() {
@@ -74,6 +74,16 @@ public class ClientRestController {
 		return new ResponseEntity<Client>(client, HttpStatus.NO_CONTENT);
 
 		
+	}
+
+	@GetMapping("/withoutgroup")
+	public ResponseEntity<List<Client>> listclientsWithoutGroup() {
+		List<Client> clients=new ArrayList<>();
+		try {
+			clients= clientJpaRepository.findByGroup_IdGroup(idGroupDefault);
+		} catch (Exception e) {
+		}
+		return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
 	}
 	
 	private void loadClientWithTelephones(Client clientUpdate) {
