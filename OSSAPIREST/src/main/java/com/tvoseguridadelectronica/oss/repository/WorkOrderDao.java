@@ -99,7 +99,7 @@ public class WorkOrderDao {
 						workOrder.setWorkOrderType(new WorkOrderType(rs.getInt("work_order_type_id"),rs.getString("name")));
 						KitWorkOrder kitWorkOrder =new KitWorkOrder();
 						kitWorkOrder.setId(rs.getInt("list_work_order_id"));
-						workOrder.setListWorkOrder(kitWorkOrder);
+						workOrder.setkitWorkOrder(kitWorkOrder);
 						map.put(id, workOrder);
 
 					} // End if

@@ -6,6 +6,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Embeddable
 public class WorkOrderMaterialId implements Serializable{
 
@@ -16,6 +18,7 @@ public class WorkOrderMaterialId implements Serializable{
 
 	@ManyToOne
     @JoinColumn(name = "work_order_id")
+	@JsonIgnoreProperties({"listWorkOrderDevices","listWorkOrderMaterials","listWorkOrderTools"})
     private WorkOrder workOrder ;
 
     @ManyToOne

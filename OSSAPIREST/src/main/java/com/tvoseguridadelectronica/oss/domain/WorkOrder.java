@@ -42,6 +42,8 @@ public class WorkOrder implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	Client client;
+	
+	
 
 	@ManyToMany
 	@JoinTable(name = "Work_order_employee", joinColumns = 
@@ -50,8 +52,17 @@ public class WorkOrder implements Serializable{
 	List<Employee> employees;
 
 	@ManyToOne
-	@JoinColumn(name = "list_work_order_id")
-    KitWorkOrder listWorkOrder;
+	@JoinColumn(name = "kit_work_order_id")
+    KitWorkOrder kitWorkOrder;
+	
+	@OneToMany(mappedBy="id.workOrder")
+	private List<WorkOrderDevice> listWorkOrderDevices;
+	
+	@OneToMany(mappedBy="id.workOrder")
+	private List<WorkOrderMaterial> listWorkOrderMaterials;
+	
+	@OneToMany(mappedBy="id.workOrder")
+	private List<WorkOrderTool> listWorkOrderTools;
 
 	@OneToOne(mappedBy="workOrder")
 	@JsonBackReference
@@ -61,24 +72,33 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "work_order_type_id")
 	WorkOrderType workOrderType;
 
-	public WorkOrder(String description, Timestamp startDate, Timestamp endDate, Color color , Client client, List<Employee> employees, KitWorkOrder kitWorkOrder, WorkOrderDetail workOrderDetail, WorkOrderType workOrderType) {
+	public WorkOrder(String description, Timestamp startDate, Timestamp endDate, Color color , 
+			Client client, List<Employee> employees, KitWorkOrder kitWorkOrder, 
+			WorkOrderDetail workOrderDetail, WorkOrderType workOrderType,List<WorkOrderDevice> listWorkOrderDevices,
+			List<WorkOrderMaterial> listWorkOrderMaterials,List<WorkOrderTool> listWorkOrderTools) {
 		this.description = description;
 		this.client = client;
 		this.employees = employees;
-		this.listWorkOrder = kitWorkOrder;
+		this.kitWorkOrder = kitWorkOrder;
 		this.workOrderDetail = workOrderDetail;
 		this.workOrderType = workOrderType;
 		this.startDate=startDate;
 		this.endDate=endDate;
 		this.color=color;
+		this.listWorkOrderDevices=listWorkOrderDevices;
+		this.listWorkOrderMaterials=listWorkOrderMaterials;
+		this.listWorkOrderTools=listWorkOrderTools;
 	}
 
 	public WorkOrder() {
 		this.client=new Client();
 		this.employees=new ArrayList<>();
-		this.listWorkOrder=new KitWorkOrder();
+		this.kitWorkOrder=new KitWorkOrder();
 		this.workOrderType=new WorkOrderType();
 		this.color=new Color();
+		this.listWorkOrderDevices=new ArrayList<>();
+		this.listWorkOrderMaterials=new ArrayList<>();
+		this.listWorkOrderTools=new ArrayList<>();
 		
 	}
 
@@ -115,12 +135,36 @@ public class WorkOrder implements Serializable{
 		this.employees = employees;
 	}
 
-	public KitWorkOrder getListWorkOrder() {
-		return listWorkOrder;
+	public KitWorkOrder getkitWorkOrder() {
+		return kitWorkOrder;
 	}
 
-	public void setListWorkOrder(KitWorkOrder kitWorkOrder) {
-		this.listWorkOrder = kitWorkOrder;
+	public void setkitWorkOrder(KitWorkOrder kitWorkOrder) {
+		this.kitWorkOrder = kitWorkOrder;
+	}
+	
+	public List<WorkOrderDevice> getListWorkOrderDevices() {
+		return listWorkOrderDevices;
+	}
+
+	public void setListWorkOrderDevices(List<WorkOrderDevice> listWorkOrderDevices) {
+		this.listWorkOrderDevices = listWorkOrderDevices;
+	}
+
+	public List<WorkOrderMaterial> getListWorkOrderMaterials() {
+		return listWorkOrderMaterials;
+	}
+
+	public void setListWorkOrderMaterials(List<WorkOrderMaterial> listWorkOrderMaterials) {
+		this.listWorkOrderMaterials = listWorkOrderMaterials;
+	}
+
+	public List<WorkOrderTool> getListWorkOrderTools() {
+		return listWorkOrderTools;
+	}
+
+	public void setListWorkOrderTools(List<WorkOrderTool> listWorkOrderTools) {
+		this.listWorkOrderTools = listWorkOrderTools;
 	}
 
 	public WorkOrderDetail getWorkOrderDetail() {
@@ -177,15 +221,15 @@ public class WorkOrder implements Serializable{
 		
 		return address;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "WorkOrder [id=" + id + ", description=" + description + ", startDate=" + startDate.toGMTString() + ", endDate="
-				+ endDate + ", color=" + color + ", client=" + client + ", employees=" + employees + ", listWorkOrder="
-				+ listWorkOrder + ", workOrderDetail=" + workOrderDetail + ", workOrderType=" + workOrderType + "]";
+				+ endDate + ", color=" + color + ", client=" + client + ", employees=" + employees + ", kitWorkOrder="
+				+ kitWorkOrder + ", listWorkOrderDevices=" + listWorkOrderDevices + ", listWorkOrderMaterials="
+				+ listWorkOrderMaterials + ", listWorkOrderTools=" + listWorkOrderTools + ", workOrderDetail="
+				+ workOrderDetail + ", workOrderType=" + workOrderType + "]";
 	}
-
-	
-	
+		
 	
 }

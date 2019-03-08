@@ -3,6 +3,9 @@ package com.tvoseguridadelectronica.oss.domain;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 @Embeddable
@@ -12,6 +15,7 @@ public class SuppliesToolId implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "kit_work_order_id")
+	@JsonIgnoreProperties({"listSuppliesDevices","listSuppliesMaterials","listSuppliesTools"})
     private KitWorkOrder kitWorkOrder ;
 
     @ManyToOne
