@@ -130,6 +130,7 @@ public class ClientRestController {
 	public ResponseEntity<Client> findClientById(@PathVariable("id") final String id ) {
 
 		Client client = clientJpaRepository.findById(id).get();
+		
 		return new ResponseEntity<Client>(client, HttpStatus.OK);
 
 	}	
