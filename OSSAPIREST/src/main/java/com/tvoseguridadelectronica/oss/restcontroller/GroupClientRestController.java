@@ -69,7 +69,15 @@ public class GroupClientRestController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GroupClient> deleteGroupClient(@PathVariable("id") final Integer id) {
+    public ResponseEntity<GroupClient> deleteGroupClient(@PathVariable("id") Integer id) {
+
+        GroupClient groupClient = groupClientJpaRepository.findById(id).get();
+        List<Client> clients = null;
+
+        for (Client client : clients) {
+            client.getGroup().setIdGroup(5);
+            clientJpaRepository.saveAndFlush(client);
+        }
         groupClientJpaRepository.deleteById(id);
         return new ResponseEntity<GroupClient>(HttpStatus.NO_CONTENT);
     }
