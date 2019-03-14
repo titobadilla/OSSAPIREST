@@ -31,15 +31,12 @@ public class MeasurementUnitRestController {
         return new ResponseEntity<MeasurementUnit>(measurementUnit, HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MeasurementUnit> editMeasurementUnit(@PathVariable("id") final Integer id,@RequestBody final MeasurementUnit measurementUnit) {
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MeasurementUnit> editMeasurementUnit(@RequestBody final MeasurementUnit measurementUnit) {
 
-        MeasurementUnit measurementUnit2 = measurementUnitJpaRepository.findById(id).get();
+        measurementUnitJpaRepository.saveAndFlush(measurementUnit);
 
-        measurementUnit2.setName(measurementUnit.getName());
-
-        measurementUnitJpaRepository.saveAndFlush(measurementUnit2);
-        return new ResponseEntity<MeasurementUnit>(measurementUnit2, HttpStatus.OK);
+        return new ResponseEntity<MeasurementUnit>(measurementUnit, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
