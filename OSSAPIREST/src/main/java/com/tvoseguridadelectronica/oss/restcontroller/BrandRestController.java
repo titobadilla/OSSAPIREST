@@ -40,16 +40,12 @@ public class BrandRestController {
         return new ResponseEntity<Brand>(brand, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Brand> updateBrand(@PathVariable("id") final Integer id, @RequestBody final Brand brand){
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Brand> updateBrand(@RequestBody final Brand brand){
 
-        Brand currentBrand = brandJpaRepository.findById(id).get();
+        brandJpaRepository.saveAndFlush(brand);
 
-        currentBrand.setName(brand.getName());
-
-        brandJpaRepository.saveAndFlush(currentBrand);
-
-        return new ResponseEntity<Brand>(currentBrand,HttpStatus.OK);
+        return new ResponseEntity<Brand>(brand,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
