@@ -39,16 +39,12 @@ public class ModelRestController {
         return new ResponseEntity<Model>(model, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Model> updateModel(@PathVariable("id") final Integer id, @RequestBody final Model model){
+    @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Model> updateModel(@RequestBody final Model model){
 
-        Model currentModel = modelJpaRepository.findById(id).get();
+        modelJpaRepository.saveAndFlush(model);
 
-        currentModel.setName(model.getName());
-
-        modelJpaRepository.saveAndFlush(currentModel);
-
-        return new ResponseEntity<Model>(currentModel,HttpStatus.OK);
+        return new ResponseEntity<Model>(model,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
