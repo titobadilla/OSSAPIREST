@@ -28,7 +28,7 @@ public class AddressDescription implements Serializable {
            @JoinColumn(name= "province_id", referencedColumnName="province_id")})
     private District district;
 
-	public AddressDescription(int id, String description, Province province, Canton canton, District district) {
+	public AddressDescription(int id, String description, District district) {
 		this.id = id;
 		this.description = description;
 		this.district = district;

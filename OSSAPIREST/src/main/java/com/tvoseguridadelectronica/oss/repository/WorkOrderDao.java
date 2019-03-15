@@ -88,17 +88,25 @@ public class WorkOrderDao {
 						client.setContactName(rs.getString("contact_name"));
 						client.setContactLastName(rs.getString("contact_last_name"));
 						client.setName(rs.getString("name_client"));
+						District d=new District();
+						Canton c=new Canton();
+						Province p=new Province();
+						c.setName(rs.getString("canton_name"));
+						c.getCantonId().setId(rs.getString("canton_id"));
+						d.setName(rs.getString("district_name"));
+						d.getDistrictId().setId(rs.getString("district_id"));
+						d.getDistrictId().getCanton().setName(rs.getString("canton_name"));
+						d.getDistrictId().getCanton().getCantonId().setId(rs.getString("canton_id"));;
+						p.setId(rs.getString("province_id"));
+						p.setName(rs.getString("province_name"));
+						d.getDistrictId().setCanton(c);
+						d.getDistrictId().getCanton().getCantonId().setProvince(p);
 						client.setAddressDescription(new AddressDescription(rs.getInt("address_description_id")
-						,rs.getString("address_description")
-						,new Province(rs.getString("province_id"),rs.getString("province_name")),
-						new Canton(new CantonId(rs.getString("canton_id"),new Province())
-								,rs.getString("canton_name")),
-						new District(new DistrictId(rs.getString("district_id"),new Province(),new Canton())
-								,rs.getString("district_name"))));
+						,rs.getString("address_description"),d));
 						workOrder.setClient(client);
 						workOrder.setWorkOrderType(new WorkOrderType(rs.getInt("work_order_type_id"),rs.getString("name")));
 						KitWorkOrder kitWorkOrder =new KitWorkOrder();
-						kitWorkOrder.setId(rs.getInt("list_work_order_id"));
+						kitWorkOrder.setId(rs.getInt("kit_work_order_id"));
 						workOrder.setkitWorkOrder(kitWorkOrder);
 						map.put(id, workOrder);
 
