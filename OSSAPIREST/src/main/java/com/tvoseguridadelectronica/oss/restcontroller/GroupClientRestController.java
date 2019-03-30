@@ -72,7 +72,9 @@ public class GroupClientRestController {
     public ResponseEntity<GroupClient> deleteGroupClient(@PathVariable("id") Integer id) {
 
         GroupClient groupClient = groupClientJpaRepository.findById(id).get();
-        List<Client> clients = null;
+  
+        List<Client> clients = groupClient.getClients();
+        System.err.println(clients.toString());
 
         for (Client client : clients) {
             client.getGroup().setIdGroup(5);
