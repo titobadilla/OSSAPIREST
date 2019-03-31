@@ -17,6 +17,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
 
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usted no se encuentra autorizado para la petición hecha");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usted no se encuentra autorizado para la petición realizada");
     }
 }

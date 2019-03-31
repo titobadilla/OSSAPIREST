@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tvoseguridadelectronica.oss.domain.ChangePassword;
 import com.tvoseguridadelectronica.oss.domain.Employee;
 import com.tvoseguridadelectronica.oss.domain.TelephoneEmployee;
 import com.tvoseguridadelectronica.oss.jparepository.EmployeeJpaRepository;
@@ -89,6 +90,25 @@ public class EmployeeRestController {
 		employee.setPassword(hashedPassword);
 		employeeJpaRepository.saveAndFlush(employee);
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+
+	}
+	
+	@PutMapping(value = "/update-password", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity editEmployeePassword(@RequestBody final ChangePassword changePassword) {
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Employee employee=this.employeeJpaRepository.findById(changePassword.getIdEmployee()).get();
+		Boolean valid=passwordEncoder.matches(changePassword.getPasswordPrevious(),employee.getPassword());
+		
+		if(valid) {
+			String hashedPassword = passwordEncoder.encode(changePassword.getPasswordNew());
+			employee.setPassword(hashedPassword);
+			employeeJpaRepository.saveAndFlush(employee);
+			return new ResponseEntity<Employee>(HttpStatus.OK);
+		}		
+		
+		return new ResponseEntity(HttpStatus.CONFLICT);
+
 
 	}
 
