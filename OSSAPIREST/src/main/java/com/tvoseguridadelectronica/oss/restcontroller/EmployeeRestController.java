@@ -64,17 +64,17 @@ public class EmployeeRestController {
 			this.telephoneEmployeeJpaRepository.save(telephoneEmployeeElement);
 		}
 	}
-	
+
 	private void updateTelephonesEmployee(Employee employeeUpdate) {
 		List<TelephoneEmployee> telephones = employeeUpdate.getTelephones();
-		
-		if(telephones.size()>1){
-			if(telephones.get(1).getNumber().equalsIgnoreCase("")){
+
+		if (telephones.size() > 1) {
+			if (telephones.get(1).getNumber().equalsIgnoreCase("")) {
 				this.telephoneEmployeeJpaRepository.delete(telephones.get(1));
 				telephones.remove(1);
 			}
 		}
-		
+
 		for (TelephoneEmployee telephoneEmployeeElement : telephones) {
 			this.telephoneEmployeeJpaRepository.saveAndFlush(telephoneEmployeeElement);
 		}
@@ -82,7 +82,7 @@ public class EmployeeRestController {
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Employee> editEmployee(@RequestBody final Employee employee) {
-		
+
 		this.updateTelephonesEmployee(employee);
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -92,23 +92,36 @@ public class EmployeeRestController {
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 
 	}
-	
+
 	@PutMapping(value = "/update-password", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity editEmployeePassword(@RequestBody final ChangePassword changePassword) {
-		
+
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		Employee employee=this.employeeJpaRepository.findById(changePassword.getIdEmployee()).get();
-		Boolean valid=passwordEncoder.matches(changePassword.getPasswordPrevious(),employee.getPassword());
-		
-		if(valid) {
+		Employee employee = this.employeeJpaRepository.findById(changePassword.getIdEmployee()).get();
+		Boolean valid = passwordEncoder.matches(changePassword.getPasswordPrevious(), employee.getPassword());
+
+		if (valid) {
 			String hashedPassword = passwordEncoder.encode(changePassword.getPasswordNew());
 			employee.setPassword(hashedPassword);
 			employeeJpaRepository.saveAndFlush(employee);
 			return new ResponseEntity<Employee>(HttpStatus.OK);
-		}		
-		
+		}
+
 		return new ResponseEntity(HttpStatus.CONFLICT);
 
+	}
+
+	@PutMapping(value = "/update-password-admin", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity editEmployeePasswordAdmin(@RequestBody final ChangePassword changePassword) {
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Employee employee = this.employeeJpaRepository.findById(changePassword.getIdEmployee()).get();
+
+		String hashedPassword = passwordEncoder.encode(changePassword.getPasswordNew());
+		employee.setPassword(hashedPassword);
+		employeeJpaRepository.saveAndFlush(employee);
+
+		return new ResponseEntity<Employee>(HttpStatus.OK);
 
 	}
 
