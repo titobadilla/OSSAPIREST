@@ -43,20 +43,15 @@ public class DeviceRestController {
         return new ResponseEntity<Device>(device, HttpStatus.OK);
     }
 
-    @PutMapping(value = "updateQuantity/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Device> editDeviceQuantity(@PathVariable("id") final Integer id,@RequestBody final Device device) {
-        Device device2= null;
+    @PutMapping(value = "updateQuantity/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Device> editDeviceQuantity(@RequestBody final Device device) {
         try {
-            device2 = deviceJpaRepository.findById(id).get();
-
-            device2.setQuantity(device.getQuantity());
-
-            deviceDao.updateDevice(device2);
+            deviceDao.updateDevice(device);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<Device>(device2, HttpStatus.OK);
+        return new ResponseEntity<Device>(device, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

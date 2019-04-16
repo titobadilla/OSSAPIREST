@@ -41,20 +41,15 @@ public class ToolRestController {
         return new ResponseEntity<Tool>(tool, HttpStatus.OK);
     }
 
-    @PutMapping(value = "updateQuantity/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tool> editQuantityTool(@PathVariable("id") final Integer id,@RequestBody Tool tool) {
-        Tool tool2=null;
+    @PutMapping(value = "updateQuantity/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Tool> editQuantityTool(@RequestBody Tool tool) {
         try {
 
-            tool2 = toolJpaRepository.findById(id).get();
-
-            tool2.setQuantity(tool.getQuantity());
-
-            toolDao.updateTool(tool2);
+            toolDao.updateTool(tool);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<Tool>(tool2, HttpStatus.OK);
+        return new ResponseEntity<Tool>(tool, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

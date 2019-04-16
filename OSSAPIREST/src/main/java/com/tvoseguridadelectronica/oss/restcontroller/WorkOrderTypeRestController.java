@@ -2,6 +2,7 @@ package com.tvoseguridadelectronica.oss.restcontroller;
 
 import com.tvoseguridadelectronica.oss.domain.WorkOrderType;
 import com.tvoseguridadelectronica.oss.jparepository.WorkOrderTypeJpaRepository;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,16 +40,13 @@ public class WorkOrderTypeRestController {
         return new ResponseEntity<WorkOrderType>(workOrderType, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WorkOrderType> updateWorkOrderType(@PathVariable("id") final Integer id, @RequestBody final WorkOrderType workOrderType){
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<WorkOrderType> updateWorkOrderType(@RequestBody final WorkOrderType workOrderType){
 
-        WorkOrderType currentWorkOrderType = workOrderTypeJpaRepository.findById(id).get();
 
-        currentWorkOrderType.setName(workOrderType.getName());
+        workOrderTypeJpaRepository.saveAndFlush(workOrderType);
 
-        workOrderTypeJpaRepository.saveAndFlush(currentWorkOrderType);
-
-        return new ResponseEntity<WorkOrderType>(currentWorkOrderType,HttpStatus.OK);
+        return new ResponseEntity<WorkOrderType>(workOrderType,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
