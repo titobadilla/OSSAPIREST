@@ -43,7 +43,6 @@ public class WorkOrder implements Serializable{
 	@JoinColumn(name = "client_id")
 	Client client;
 	
-	
 
 	@ManyToMany
 	@JoinTable(name = "Work_order_employee", joinColumns = 
@@ -224,6 +223,10 @@ public class WorkOrder implements Serializable{
 
 	@Override
 	public String toString() {
+		if(startDate==null) {
+			return "";
+		}
+		
 		return "WorkOrder [id=" + id + ", description=" + description + ", startDate=" + startDate.toGMTString() + ", endDate="
 				+ endDate + ", color=" + color + ", client=" + client + ", employees=" + employees + ", kitWorkOrder="
 				+ kitWorkOrder + ", listWorkOrderDevices=" + listWorkOrderDevices + ", listWorkOrderMaterials="

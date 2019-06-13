@@ -18,7 +18,8 @@ public class WorkOrderToolId implements Serializable{
 	
 	 	@ManyToOne
 	    @JoinColumn(name = "work_order_id")
-	 	@JsonIgnoreProperties({"listWorkOrderDevices","listWorkOrderMaterials","listWorkOrderTools"})
+	 	@JsonIgnoreProperties({"listWorkOrderDevices","listWorkOrderMaterials","listWorkOrderTools",
+			"startDate","endDate","color","client"})
 	    private WorkOrder workOrder ;
 
 	    @ManyToOne
