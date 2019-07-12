@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -85,7 +86,49 @@ public class WorkOrderRestController {
 	public ResponseEntity<WorkOrder> editWorkOrder(@PathVariable("id") final Integer id,
 			@RequestBody final WorkOrder workOrder) {
 
-		workOrderJpaRepository.saveAndFlush(workOrder);
+		int idUpdated = workOrder.getId();
+		
+		
+		if(workOrder!=null) {
+			this.workOrderDao.removeWorkOrderDevicesById(idUpdated);
+			this.workOrderDao.removeWorkOrderToolsById(idUpdated);
+			this.workOrderDao.removeWorkOrderMaterialsById(idUpdated);	
+			
+			List<WorkOrderMaterial> listWorkOrderMaterials = workOrder.getListWorkOrderMaterials();
+			List<WorkOrderDevice> listWorkOrderDevices = workOrder.getListWorkOrderDevices();
+			List<WorkOrderTool> listWorkOrderTools = workOrder.getListWorkOrderTools();
+
+			if (listWorkOrderMaterials != null && listWorkOrderMaterials.size() > 0) {
+				for (Iterator iterator = listWorkOrderMaterials.iterator(); iterator.hasNext();) {
+					WorkOrderMaterial workOrderMaterial = (WorkOrderMaterial) iterator.next();
+					workOrderMaterial.getId().getWorkOrder().setId(idUpdated);
+					workOrderMaterialJpaRepository.save(workOrderMaterial);
+				}
+			}
+
+			if (listWorkOrderDevices != null && listWorkOrderDevices.size() > 0) {
+				for (Iterator iterator = listWorkOrderDevices.iterator(); iterator.hasNext();) {
+					WorkOrderDevice workOrderDevice = (WorkOrderDevice) iterator.next();
+					workOrderDevice.getId().getWorkOrder().setId(idUpdated);
+					workOrderDeviceJpaRepository.save(workOrderDevice);
+				}
+			}
+
+			if (listWorkOrderTools != null && listWorkOrderTools.size() > 0) {
+				for (Iterator iterator = listWorkOrderTools.iterator(); iterator.hasNext();) {
+					WorkOrderTool workOrderTool = (WorkOrderTool) iterator.next();
+					workOrderTool.getId().getWorkOrder().setId(idUpdated);
+					workOrderToolJpaRepository.save(workOrderTool);
+				}
+			}
+			
+			
+		}
+		workOrder.setListWorkOrderDevices(new ArrayList<WorkOrderDevice>());
+		workOrder.setListWorkOrderMaterials(new ArrayList<WorkOrderMaterial>());
+		workOrder.setListWorkOrderTools(new ArrayList<WorkOrderTool>());
+		
+		WorkOrder workOrderUpdated = workOrderJpaRepository.saveAndFlush(workOrder);
 
 		return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
 	}

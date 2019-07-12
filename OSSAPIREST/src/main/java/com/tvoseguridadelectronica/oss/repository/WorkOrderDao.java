@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
@@ -25,12 +27,19 @@ import com.tvoseguridadelectronica.oss.domain.KitWorkOrder;
 public class WorkOrderDao {
 	
 	 private JdbcTemplate jdbcTemplate;
-	    private SimpleJdbcCall simpleJdbcCall;
+	    private SimpleJdbcCall simpleJdbcCallRemoveWorkOrderMaterialsById;
+
+	    private SimpleJdbcCall simpleJdbcCallRemoveWorkOrderDevicesById;
+
+	    private SimpleJdbcCall simpleJdbcCallRemoveWorkOrderToolsById;
 
 	    @Autowired
 	    public void setDataSource(DataSource dataSource){
 	        this.jdbcTemplate = new JdbcTemplate(dataSource);
-	        this.simpleJdbcCall = new SimpleJdbcCall(dataSource);
+	        this.simpleJdbcCallRemoveWorkOrderDevicesById = new SimpleJdbcCall(dataSource);
+	        this.simpleJdbcCallRemoveWorkOrderMaterialsById = new SimpleJdbcCall(dataSource);
+	        this.simpleJdbcCallRemoveWorkOrderToolsById = new SimpleJdbcCall(dataSource);
+	        
 	    }
 	    
 	    
@@ -55,6 +64,36 @@ public class WorkOrderDao {
 
 			List<WorkOrder> listWorkOrders = this.jdbcTemplate.query(sqlProcedure, new WorkOrdersByStartDateLikeExtractor(),date);
 			return listWorkOrders;    	
+	    	
+	    }
+	    
+	    public void removeWorkOrderMaterialsById(int id){
+	    	
+	    	 SqlParameterSource parameterSource= new MapSqlParameterSource()
+	                 .addValue("id", id);
+
+	    	 simpleJdbcCallRemoveWorkOrderMaterialsById.setProcedureName("OSS_Work_Orders_Remove_Materials_By_Id");
+	    	 simpleJdbcCallRemoveWorkOrderMaterialsById.execute(parameterSource);			  	
+	    	
+	    }
+	    
+	    public void removeWorkOrderDevicesById(int id){
+	    	
+	    	 SqlParameterSource parameterSource= new MapSqlParameterSource()
+	                 .addValue("id", id);
+
+	    	 simpleJdbcCallRemoveWorkOrderDevicesById.setProcedureName("OSS_Work_Orders_Remove_Devices_By_Id");
+	    	 simpleJdbcCallRemoveWorkOrderDevicesById.execute(parameterSource);			  	
+	    	
+	    }
+	    
+	    public void removeWorkOrderToolsById(int id){
+	    	
+	    	 SqlParameterSource parameterSource= new MapSqlParameterSource()
+	                 .addValue("id", id);
+
+	    	 simpleJdbcCallRemoveWorkOrderToolsById.setProcedureName("OSS_Work_Orders_Remove_Tools_By_Id");
+	    	 simpleJdbcCallRemoveWorkOrderToolsById.execute(parameterSource);			  	
 	    	
 	    }
 	    
