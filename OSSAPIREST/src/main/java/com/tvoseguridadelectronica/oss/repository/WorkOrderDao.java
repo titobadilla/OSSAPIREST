@@ -108,13 +108,18 @@ public class WorkOrderDao {
 				WorkOrder workOrder = null;
 				String dateStart;
 				String dateEnd;
+				Employee employee;
 				
 
 				while (rs.next()) {
 					Integer id = rs.getInt("id");
-					workOrder = map.get(id);
+					employee=new Employee();
+					employee.setName(rs.getString("name_employee"));
+					employee.setLastName(rs.getString("last_name_employee"));
+					workOrder = map.get(id);					
 					if (workOrder == null) {
 						workOrder = new WorkOrder();
+						workOrder.getEmployees().add(employee);
 						workOrder.setId(id);
 						workOrder.setDescription(rs.getString("description"));
 						dateStart=rs.getString("start_date");
@@ -146,10 +151,14 @@ public class WorkOrderDao {
 						workOrder.setWorkOrderType(new WorkOrderType(rs.getInt("work_order_type_id"),rs.getString("name")));
 						KitWorkOrder kitWorkOrder =new KitWorkOrder();
 						kitWorkOrder.setId(rs.getInt("kit_work_order_id"));
-						workOrder.setkitWorkOrder(kitWorkOrder);
+						workOrder.setkitWorkOrder(kitWorkOrder);	
 						map.put(id, workOrder);
 
 					} // End if
+					else {
+						workOrder.getEmployees().add(employee);
+						map.put(id, workOrder);
+					}
 					
 				}
 
