@@ -38,7 +38,22 @@ public class KitWorkOrderRestController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<KitWorkOrder> createListWorkOrder(@RequestBody final KitWorkOrder kitWorkOrder) {
 
-        kitWorkOrderJpaRepository.save(kitWorkOrder);
+        List <KitWorkOrder> kitWorkOrders = kitWorkOrderJpaRepository.findAll();
+            boolean exit = true;
+
+        for (KitWorkOrder value: kitWorkOrders
+             ) {
+            if(value.getName().equals(kitWorkOrder.getName())){
+                kitWorkOrder.setName("exist");
+                exit = false;
+                break;
+            }
+        }
+
+        if (exit) {
+            kitWorkOrderJpaRepository.save(kitWorkOrder);
+        }
+
         return new ResponseEntity<KitWorkOrder>(kitWorkOrder, HttpStatus.CREATED);
     }
 
