@@ -1,5 +1,6 @@
 package com.tvoseguridadelectronica.oss.restcontroller;
 
+import com.tvoseguridadelectronica.oss.domain.Report;
 import com.tvoseguridadelectronica.oss.domain.WorkOrder;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderDevice;
 import com.tvoseguridadelectronica.oss.domain.WorkOrderMaterial;
@@ -170,5 +171,23 @@ public class WorkOrderRestController {
 	public ResponseEntity<WorkOrder> deleteWorkOrder(@PathVariable("id") final int id) {
 		workOrderJpaRepository.deleteById(id);
 		return new ResponseEntity<WorkOrder>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/reportbytypedate/{id}/{startDate}/{endDate}")
+	public ResponseEntity<List<Report>> reportByTypeAndDate(@PathVariable("id") final int id,@PathVariable("startDate") final String startDate,
+			@PathVariable("endDate") final String endDate) {
+
+		List<Report> reportList = workOrderDao.reportWorkOrderByTypeAndDate(id, startDate, endDate);
+		return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
+
+	}
+	
+	@GetMapping("/reportbyclientdate/{id}/{startDate}/{endDate}")
+	public ResponseEntity<List<Report>> reportByClientAndDate(@PathVariable("id") final int id,@PathVariable("startDate") final String startDate,
+			@PathVariable("endDate") final String endDate) {
+
+		List<Report> reportList = workOrderDao.reportWorkOrderByClientAndDate(id, startDate, endDate);
+		return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
+
 	}
 }

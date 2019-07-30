@@ -31,7 +31,11 @@ public class WorkOrderDao {
 
 	    private SimpleJdbcCall simpleJdbcCallRemoveWorkOrderDevicesById;
 
-	    private SimpleJdbcCall simpleJdbcCallRemoveWorkOrderToolsById;
+	    private SimpleJdbcCall simpleJdbcCallRemoveWorkOrderToolsById;	    
+
+	    private SimpleJdbcCall simpleJdbcCallReportWorkOrderByTypeAndDate;
+
+	    private SimpleJdbcCall simpleJdbcCallReportWorkOrderByClientAndDate;
 
 	    @Autowired
 	    public void setDataSource(DataSource dataSource){
@@ -39,7 +43,24 @@ public class WorkOrderDao {
 	        this.simpleJdbcCallRemoveWorkOrderDevicesById = new SimpleJdbcCall(dataSource);
 	        this.simpleJdbcCallRemoveWorkOrderMaterialsById = new SimpleJdbcCall(dataSource);
 	        this.simpleJdbcCallRemoveWorkOrderToolsById = new SimpleJdbcCall(dataSource);
-	        
+	        this.simpleJdbcCallReportWorkOrderByTypeAndDate=new SimpleJdbcCall(dataSource);
+	        this.simpleJdbcCallReportWorkOrderByClientAndDate=new SimpleJdbcCall(dataSource);	        
+	    }
+	    
+	    public List<Report> reportWorkOrderByClientAndDate(int clientId,String startDate,String endDate){
+	    	String sqlProcedure = "{call OSS_Report_Work_Order_By_Client_And_Date(?,?,?)}";
+
+			List<Report> reportList = this.jdbcTemplate.query(sqlProcedure, new WorkOrdersReportExtractor(),clientId,startDate,endDate);
+			return reportList;    	
+	    	
+	    }
+	    
+	    public List<Report> reportWorkOrderByTypeAndDate(int typeId,String startDate,String endDate){
+	    	String sqlProcedure = "{call OSS_Report_Work_Order_By_Type_And_Date(?,?,?)}";
+
+			List<Report> reportList = this.jdbcTemplate.query(sqlProcedure, new WorkOrdersReportExtractor(),typeId,startDate,endDate);
+			return reportList;    	
+	    	
 	    }
 	    
 	    
@@ -166,6 +187,36 @@ public class WorkOrderDao {
 			}
 
 		}// WorkOrdersByStartDateLikeExtractor
+	    
+	    
+	    private static final class WorkOrdersReportExtractor implements ResultSetExtractor<List<Report>> {
+
+			@Override
+			public List<Report> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				// TODO Auto-generated method stub
+				Map<Integer, Report> map = new HashMap<Integer, Report>();
+				Report report = null;
+
+				while (rs.next()) {
+					Integer id = rs.getInt("id");					
+					report = map.get(id);					
+					if (report == null) {
+						report = new Report();
+						report.setId(rs.getInt("id"));
+						report.setDescription(rs.getString("description"));
+						report.setStartDate(rs.getString("start_date"));
+						report.setEndDate(rs.getString("end_date"));
+						report.setState(rs.getString("state"));
+						report.setNameClient(rs.getString("name_client"));
+						report.setNameWorkOrderType(rs.getString("name_work_order_type"));
+						map.put(id, report);
+
+					} // End if								
+				}
+				return new ArrayList<Report>(map.values());
+			}
+
+		}// WorkOrdersReportExtractor
 
 }
 
