@@ -28,13 +28,13 @@ public class KitWorkOrder implements Serializable {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(mappedBy="id.kitWorkOrder")
+	@OneToMany(mappedBy="id.kitWorkOrder", orphanRemoval = true )
 	private List<SuppliesDevice> listSuppliesDevices;
 	
-	@OneToMany(mappedBy="id.kitWorkOrder")
+	@OneToMany(mappedBy="id.kitWorkOrder", orphanRemoval = true )
 	private List<SuppliesMaterial> listSuppliesMaterials;
 	
-	@OneToMany(mappedBy="id.kitWorkOrder")
+	@OneToMany(mappedBy="id.kitWorkOrder", orphanRemoval = true )
 	private List<SuppliesTool> listSuppliesTools;
 
 	public KitWorkOrder(int id, String name, List<SuppliesDevice> listSuppliesDevices,
