@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,11 +58,11 @@ public class WorkOrderDetailRestController {
     }
 
     @GetMapping("/search/{f1}/{f2}")
-    public ResponseEntity<WorkOrderDetail[]> listWorkOrderDetailByDate(@PathVariable("f1") final Date f1,
+    public ResponseEntity<ArrayList<WorkOrderDetail>> listWorkOrderDetailByDate(@PathVariable("f1") final Date f1,
                                                                        @PathVariable("f2") final Date f2) {
 
-        WorkOrderDetail[] details = workOrderDetailJpaRepository.findWorkOrderDetailByDateBetween(f1,f2);
-        return  new ResponseEntity<WorkOrderDetail[]>(details, HttpStatus.OK);
+        ArrayList<WorkOrderDetail> details = workOrderDetailJpaRepository.findWorkOrderDetailByDateBetween(f1,f2);
+        return  new ResponseEntity<ArrayList<WorkOrderDetail>>(details, HttpStatus.OK);
     }
 
 

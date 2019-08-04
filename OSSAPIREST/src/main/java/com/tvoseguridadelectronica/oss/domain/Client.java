@@ -38,11 +38,11 @@ public class Client implements Serializable{
 	@Column(name = "contact_last_name")
 	private String contactLastName;
 
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy="client",orphanRemoval = true)
 	@JsonManagedReference
 	private List<TelephoneClient> telephones;
 	
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name="address_description_id")
 	private AddressDescription addressDescription;
 	

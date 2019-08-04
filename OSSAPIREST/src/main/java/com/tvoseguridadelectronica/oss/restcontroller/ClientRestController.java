@@ -152,7 +152,7 @@ public class ClientRestController {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println("Error de borrado, por llave foranea");
+			System.err.println(e);
 			
 		}
 		

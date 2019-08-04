@@ -11,5 +11,5 @@ import java.util.Date;
 public  interface WorkOrderDetailJpaRepository extends JpaRepository<WorkOrderDetail, Integer> {
 
 
-   WorkOrderDetail[] findWorkOrderDetailByDateBetween (Date f1, Date f2);
+   ArrayList<WorkOrderDetail> findWorkOrderDetailByDateBetween (Date f1, Date f2);
 }

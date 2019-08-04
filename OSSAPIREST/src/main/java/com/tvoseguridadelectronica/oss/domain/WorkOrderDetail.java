@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Date;
@@ -42,6 +43,9 @@ public class WorkOrderDetail  implements Serializable {
     
     @OneToOne
 	@JoinColumn(name = "work_order_id")
+    @JsonIgnoreProperties({"description","startDate","endDate",
+            "color","client","employees","kitWorkOrder","listWorkOrderDevices","listWorkOrderMaterials","listWorkOrderTools",
+            "workOrderDetail","workOrderType"})
 	@JsonManagedReference
     private WorkOrder workOrder;
 
