@@ -74,11 +74,13 @@ public class GroupClientRestController {
         GroupClient groupClient = groupClientJpaRepository.findById(id).get();
   
         List<Client> clients = groupClient.getClients();
-        System.err.println(clients.toString());
+        
 
         for (Client client : clients) {
-            client.getGroup().setIdGroup(5);
-            clientJpaRepository.saveAndFlush(client);
+        	Client c=clientJpaRepository.findById(client.getId()).get();
+        	c.setGroup(new GroupClient());
+            c.getGroup().setIdGroup(5);
+            clientJpaRepository.saveAndFlush(c);
         }
         groupClientJpaRepository.deleteById(id);
         return new ResponseEntity<GroupClient>(HttpStatus.NO_CONTENT);
