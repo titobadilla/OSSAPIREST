@@ -44,6 +44,13 @@ public class WorkOrderRestController {
 		return new ResponseEntity<List<WorkOrder>>(workOrders, HttpStatus.OK);
 	}
 
+	@GetMapping("/filter")
+	public ResponseEntity<List<WorkOrder>> listAllWorkOrderFilter() {
+		List<WorkOrder> workOrders = workOrderDao.getAllByFilter();
+
+		return new ResponseEntity<List<WorkOrder>>(workOrders, HttpStatus.OK);
+	}
+
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<WorkOrder> createWorkOrder(@RequestBody final WorkOrder workOrder) {
 		WorkOrder workOrderSaved = workOrderJpaRepository.save(workOrder);

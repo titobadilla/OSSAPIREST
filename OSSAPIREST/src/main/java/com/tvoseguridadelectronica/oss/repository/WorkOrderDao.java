@@ -3,10 +3,7 @@ package com.tvoseguridadelectronica.oss.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.sql.DataSource;
 
@@ -54,6 +51,14 @@ public class WorkOrderDao {
 			return reportList;    	
 	    	
 	    }
+
+	    public List<WorkOrder> getAllByFilter(){
+			String sqlProcedure = "{call OSS_Get_Work_Order()}";
+
+	    	List<WorkOrder> workOrders = this.jdbcTemplate.query(sqlProcedure, new WorkOrderExtractor());
+
+	    	return workOrders;
+		}
 	    
 	    public List<Report> reportWorkOrderByTypeAndDate(int typeId,String startDate,String endDate){
 	    	String sqlProcedure = "{call OSS_Report_Work_Order_By_Type_And_Date(?,?,?)}";
@@ -202,7 +207,7 @@ public class WorkOrderDao {
 					report = map.get(id);					
 					if (report == null) {
 						report = new Report();
-						report.setId(rs.getInt("id"));
+						report.setId(id);
 						report.setDescription(rs.getString("description"));
 						report.setStartDate(rs.getString("start_date"));
 						report.setEndDate(rs.getString("end_date"));
@@ -217,6 +222,38 @@ public class WorkOrderDao {
 			}
 
 		}// WorkOrdersReportExtractor
+
+	private static final class WorkOrderExtractor implements ResultSetExtractor<List<WorkOrder>> {
+
+		@Override
+		public List<WorkOrder> extractData(ResultSet rs) throws SQLException, DataAccessException {
+			// TODO Auto-generated method stub
+			Map<Integer, WorkOrder> map = new HashMap<Integer, WorkOrder>();
+			WorkOrder workOrder = null;
+
+			while (rs.next()) {
+				Integer id = rs.getInt("id");
+				workOrder = map.get(id);
+				if (workOrder == null) {
+					workOrder = new WorkOrder();
+					workOrder.setId(id);
+					workOrder.setDescription(rs.getString("description"));
+					workOrder.setStartDate(new Timestamp(System.currentTimeMillis()));
+					workOrder.setEndDate(new Timestamp(System.currentTimeMillis()));
+					workOrder.setColor(null);
+					workOrder.setClient(null);
+					workOrder.setWorkOrderType(null);
+					workOrder.setkitWorkOrder(null);
+
+
+					map.put(id, workOrder);
+
+				} // End if
+			}
+			return new ArrayList<WorkOrder>(map.values());
+		}
+
+	}// WorkOrdersReportExtractor
 
 }
 

@@ -208,17 +208,19 @@ public class WorkOrder implements Serializable{
 
 	
 	public String getNameClientOptional(){
-		return this.client.getName();
+			return this.client!=null?this.client.getName():"";
 	}
 	
 	public String getLocationClientOptional(){
-		
-		String address=this.client.getAddressDescription().getDistrict().getDistrictId().getCanton().getCantonId().getProvince().getName()
-				+ ", "+ this.client.getAddressDescription().getDistrict().getDistrictId().getCanton().getName()
-				+", "+ this.client.getAddressDescription().getDistrict().getName()
-				+"; "+  this.client.getAddressDescription().getDescription();
-		
-		return address;
+		String address = "";
+		if(client!=null) {
+			address = this.client.getAddressDescription().getDistrict().getDistrictId().getCanton().getCantonId().getProvince().getName()
+					+ ", " + this.client.getAddressDescription().getDistrict().getDistrictId().getCanton().getName()
+					+ ", " + this.client.getAddressDescription().getDistrict().getName()
+					+ "; " + this.client.getAddressDescription().getDescription();
+		}
+			return address;
+
 	}
 
 	@Override
